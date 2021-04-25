@@ -4,8 +4,8 @@ class Pendu {
   static ThemeData get lightTheme {
     return ThemeData(
         brightness: Brightness.light,
-        primaryColor: Pendu.color('5BDB98'),
-        accentColor: Pendu.color('1B3149'),
+        primaryColor: Pendu.color('1B3149'),
+        accentColor: Pendu.color('5BDB98'),
         inputDecorationTheme:
             InputDecorationTheme(border: OutlineInputBorder()));
   }
