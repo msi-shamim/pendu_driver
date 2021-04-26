@@ -39,6 +39,7 @@ class _HomePageState extends State<HomePage> {
                 Divider(height: 20),
                 //todo Rating section
                 DriverRatings(),
+                Divider(height: 40),
                 //Todo Notice board section
                 NoticeBoard(),
                 Divider(height: 40),

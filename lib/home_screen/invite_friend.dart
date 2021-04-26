@@ -122,7 +122,10 @@ class _InviteFriendState extends State<InviteFriend> {
               borderRadius: BorderRadius.circular(5.0),
               color: Pendu.color('F1F1F1')),
           alignment: Alignment.center,
-          child: Text("https:// www.pendshf.sdajfsd/dsfds"),
+          child: Text(
+            "https:// www.pendshf.sdajfsd/dsfds",
+            style: TextStyle(color: Colors.black54),
+          ),
         ),
         _buildCopyLinkBtn(),
         _buildShareRow()
