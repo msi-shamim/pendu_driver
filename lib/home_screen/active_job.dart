@@ -155,7 +155,7 @@ class _ActiveJobState extends State<ActiveJob> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 30.0),
+      // margin: EdgeInsets.symmetric(vertical: 5.0),
       child: Column(
         children: [
           Text(
@@ -163,9 +163,9 @@ class _ActiveJobState extends State<ActiveJob> {
             style: PenduTextStyle().headerStyle,
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 10.0),
+            padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 5.0),
             width: MediaQuery.of(context).size.width - 10,
-            height: 300,
+            height: 290,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
