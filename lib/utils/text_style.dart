@@ -13,4 +13,5 @@ class PenduTextStyle {
       TextStyle(fontSize: 14, color: Pendu.color('90A0B2'));
   TextStyle fadedTextStyle =
       TextStyle(color: Pendu.color('90A0B2'), fontSize: 11);
+  TextStyle fadedTextStyle2 = TextStyle(color: Pendu.color('90A0B2'));
 }
