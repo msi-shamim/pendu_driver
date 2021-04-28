@@ -3,3 +3,5 @@ export 'package:pendu_driver/utils/common_app_bar.dart';
 export 'package:pendu_driver/utils/text_style.dart';
 export 'package:pendu_driver/utils/deliver_address_table.dart';
 export 'package:pendu_driver/utils/product_chip.dart';
+export 'package:pendu_driver/utils/Job_task_card.dart';
+export 'package:pendu_driver/utils/timeline.dart';

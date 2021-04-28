@@ -4,4 +4,8 @@ export 'package:pendu_driver/screen/job_search.dart';
 export 'package:pendu_driver/screen/task_view.dart';
 export 'package:pendu_driver/screen/jobs_view.dart';
 export 'package:pendu_driver/screen/jobs_pending.dart';
+export 'package:pendu_driver/screen/jobs_confirmed.dart';
+export 'package:pendu_driver/screen/jobs_inprogress.dart';
+export 'package:pendu_driver/screen/jobs_completed.dart';
+export 'package:pendu_driver/screen/job_timeline1.dart';
 export 'package:pendu_driver/utils/data.dart';

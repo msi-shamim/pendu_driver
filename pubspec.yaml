@@ -33,6 +33,7 @@ dependencies:
   dotted_line: ^3.0.0
   draggable_bottom_sheet: ^0.1.2
   buttons_tabbar: ^1.2.1
+  timelines: ^0.1.0
 
 dev_dependencies:
   flutter_test:

@@ -30,7 +30,7 @@ class DeliverAddressTable extends StatelessWidget {
                 lineLength: lineHight,
                 lineThickness: 1.0,
                 dashLength: 4.0,
-                dashColor: Colors.grey,
+                dashColor: defineTextSTyle.color,
                 dashRadius: 0.0,
                 dashGapLength: 4.0,
                 dashGapColor: Colors.transparent,

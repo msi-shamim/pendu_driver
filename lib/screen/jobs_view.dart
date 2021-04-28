@@ -46,29 +46,30 @@ class _JobsViewState extends State<JobsView>
                   children: <Widget>[
                     ButtonsTabBar(
                       contentPadding:
-                          EdgeInsets.symmetric(horizontal: 2, vertical: 10),
+                          EdgeInsets.symmetric(horizontal: 5, vertical: 8),
                       backgroundColor: Theme.of(context).primaryColor,
                       unselectedBackgroundColor: Colors.white,
-                      borderColor: Theme.of(context).primaryColor,
-                      borderWidth: 2,
+                      borderColor: Pendu.color('90A0B2'),
+                      borderWidth: 1,
                       unselectedBorderColor: Pendu.color('707070'),
                       labelStyle: TextStyle(color: Colors.white),
                       unselectedLabelStyle:
                           TextStyle(color: Pendu.color('90A0B2')),
                       tabs: [
-                        Tab(text: '  Pending  '),
-                        Tab(text: ' Confirmed '),
+                        Tab(text: ' Pending '),
+                        Tab(text: 'Confirmed'),
                         Tab(text: 'In Progress'),
-                        Tab(text: ' Completed '),
+                        Tab(text: 'Completed'),
                       ],
                     ),
+                    SizedBox(height: 20.0),
                     Expanded(
                       child: TabBarView(
                         children: <Widget>[
                           JobsPending(),
-                          JobsPending(),
-                          JobsPending(),
-                          JobsPending(),
+                          JobsConfirmed(),
+                          JobsInProgress(),
+                          JobsCompleted(),
                           //  TaskPending(),
                         ],
                       ),

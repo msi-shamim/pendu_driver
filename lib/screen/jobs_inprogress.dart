@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:pendu_driver/utils/utils.dart';
 
-class JobsPending extends StatefulWidget {
+class JobsInProgress extends StatefulWidget {
   @override
-  _JobsPendingState createState() => _JobsPendingState();
+  _JobsInProgressState createState() => _JobsInProgressState();
 }
 
-class _JobsPendingState extends State<JobsPending> {
-  Widget _buildButton() {
+class _JobsInProgressState extends State<JobsInProgress> {
+  Widget _buildStartButton() {
     return SizedBox(
-      width: MediaQuery.of(context).size.width - 30,
-      height: 40,
+      width: MediaQuery.of(context).size.width - 80,
+      height: 38,
       child: ElevatedButton(
         onPressed: () {},
         style: ElevatedButton.styleFrom(
           elevation: 0,
-          primary: Pendu.color('FFCE8A'),
+          primary: Theme.of(context).primaryColor,
           onPrimary: Colors.white,
         ),
         child: Text(
-          'Awaiting customer Confirmation',
+          'Start Task',
           style: PenduTextStyle().btnStyle,
         ),
       ),
@@ -33,17 +33,22 @@ class _JobsPendingState extends State<JobsPending> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5.0),
           ),
-          height: 200,
+          height: 230,
           // width: 200,
           child: Card(
             elevation: 3.0,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 JobTaskCard(),
+                Padding(
+                  padding: const EdgeInsets.only(right: 30.0, top: 5.0),
+                  child: Text('Delivery fee- \$15'),
+                ),
                 Spacer(),
-                _buildButton(),
-                SizedBox(height: 2.0)
+                _buildStartButton(),
+                SizedBox(height: 20.0),
               ],
             ),
           )),
