@@ -18,43 +18,47 @@ class JobTaskCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               //Left user profile
-              Container(
-                padding: EdgeInsets.only(top: 10.0, left: 5.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: 70,
-                      width: 70,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          image: DecorationImage(
-                              image: NetworkImage(
-                                  'https://cultivatedculture.com/wp-content/uploads/2019/12/LinkedIn-Profile-Picture-Example-Madeline-Mann.jpeg'),
-                              fit: BoxFit.cover)),
-                    ),
-                    Text('Nicolas L.'),
-                    SizedBox(height: 5.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.star,
-                          size: 16.0,
-                          color: Pendu.color('FFB44A'),
-                        ),
-                        SizedBox(width: 7),
-                        Text(
-                          '4.89',
-                          style: TextStyle(fontSize: 14),
-                        ),
-                      ],
-                    ),
-                  ],
+              Expanded(
+                flex: 2,
+                child: Container(
+                  padding: EdgeInsets.only(top: 10.0, left: 5.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 70,
+                        width: 70,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            image: DecorationImage(
+                                image: NetworkImage(
+                                    'https://cultivatedculture.com/wp-content/uploads/2019/12/LinkedIn-Profile-Picture-Example-Madeline-Mann.jpeg'),
+                                fit: BoxFit.cover)),
+                      ),
+                      Text('Nicolas L.'),
+                      SizedBox(height: 5.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.star,
+                            size: 16.0,
+                            color: Pendu.color('FFB44A'),
+                          ),
+                          SizedBox(width: 7),
+                          Text(
+                            '4.89',
+                            style: TextStyle(fontSize: 14),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               //Rightside
               Expanded(
+                flex: 6,
                 child: Container(
                     margin: EdgeInsets.only(left: 10.0),
                     //height: 120,
@@ -85,7 +89,11 @@ class JobTaskCard extends StatelessWidget {
                           ],
                         ),
                         SizedBox(height: 5.0),
-                        DeliverAddressTable(lineHight: 20),
+                        DeliverAddressTable(
+                          lineHight: 20,
+                          defineTextSTyle: TextStyle(
+                              color: Pendu.color('90A0B2'), fontSize: 10),
+                        ),
                         SizedBox(height: 5.0),
                         Row(
                           children: [

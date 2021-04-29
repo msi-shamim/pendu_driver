@@ -45,6 +45,7 @@ class _JobsViewState extends State<JobsView>
                 child: Column(
                   children: <Widget>[
                     ButtonsTabBar(
+                      duration: 10,
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 5, vertical: 8),
                       backgroundColor: Theme.of(context).primaryColor,

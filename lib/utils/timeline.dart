@@ -1,15 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:pendu_driver/screen/screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
 import 'package:timelines/timelines.dart';
 
-class TimeLine extends StatelessWidget {
-  final int screenValue;
-  double hightValue = 12;
+class TimeLine extends StatefulWidget {
+  @override
+  _TimeLineState createState() => _TimeLineState();
+}
 
-  TimeLine({@required this.screenValue});
+class _TimeLineState extends State<TimeLine> {
+  int screenValue = 0;
+
+  final double hightValue = 12;
 
   @override
   Widget build(BuildContext context) {
+    Widget _buildCheckBox({Color boxColor}) {
+      return Container(
+        padding: EdgeInsets.all(3.0),
+        height: 20,
+        width: 20,
+        decoration: BoxDecoration(
+            border: Border.all(color: boxColor, width: 2.5),
+            borderRadius: BorderRadius.circular(4.0),
+            color: Colors.white),
+        child: Container(color: boxColor),
+      );
+    }
+
+    Widget _buildUnCheckBox({Color boxColor}) {
+      return Container(
+        padding: EdgeInsets.all(3.0),
+        height: 20,
+        width: 20,
+        decoration: BoxDecoration(
+            border: Border.all(color: boxColor, width: 2.5),
+            borderRadius: BorderRadius.circular(4.0),
+            color: Colors.white),
+      );
+    }
+
     return Container(
       //padding: EdgeInsets.only(top: 10.0),
       alignment: Alignment.center,
@@ -21,106 +51,111 @@ class TimeLine extends StatelessWidget {
         //  crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           //1
-          TimelineTile(
-            direction: Axis.vertical,
-            nodeAlign: TimelineNodeAlign.start,
-            oppositeContents: null,
-            contents: Container(
-              padding: EdgeInsets.only(left: 15.0),
-              child: Text('Driving to pickup'),
-            ),
-            node: TimelineNode(
-              indicator: ContainerIndicator(
-                  child: (screenValue >= 1)
-                      ? Icon(
-                          Icons.check_box_outlined,
-                          color: Pendu.color('F97A7A'),
-                        )
-                      : Icon(
-                          Icons.check_box_outline_blank,
-                          color: Pendu.color('F97A7A'),
-                        )),
-              endConnector: SizedBox(
-                height: hightValue,
-                child: DashedLineConnector(
-                  thickness: 1,
-                  dash: 2,
-                  gap: 2,
-                  color: Pendu.color('707070'),
+          InkWell(
+            onTap: () {
+              setState(() {
+                screenValue = 1;
+              });
+            },
+            child: TimelineTile(
+              direction: Axis.vertical,
+              nodeAlign: TimelineNodeAlign.start,
+              oppositeContents: null,
+              contents: Container(
+                padding: EdgeInsets.only(left: 15.0),
+                child: Text('Driving to pickup'),
+              ),
+              node: TimelineNode(
+                indicator: ContainerIndicator(
+                    child: (screenValue >= 1)
+                        ? _buildCheckBox(boxColor: Pendu.color('F97A7A'))
+                        : _buildUnCheckBox(boxColor: Pendu.color('F97A7A'))),
+                endConnector: SizedBox(
+                  height: hightValue,
+                  child: DashedLineConnector(
+                    thickness: 1,
+                    dash: 2,
+                    gap: 2,
+                    color: Pendu.color('707070'),
+                  ),
                 ),
               ),
             ),
           ),
 
           //2
-          TimelineTile(
-            direction: Axis.vertical,
-            nodeAlign: TimelineNodeAlign.start,
-            oppositeContents: null,
-            contents: Container(
-              padding: EdgeInsets.only(left: 15.0),
-              child: Text('Shopping started'),
-            ),
-            node: TimelineNode(
-              indicator: ContainerIndicator(
-                child: (screenValue >= 2)
-                    ? Icon(
-                        Icons.check_box_outlined,
-                        color: Pendu.color('FFCE8A'),
-                      )
-                    : Icon(
-                        Icons.check_box_outline_blank,
-                        color: Pendu.color('FFCE8A'),
-                      ),
+          InkWell(
+            onTap: () {
+              setState(() {
+                screenValue = 2;
+              });
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Shopping()),
+              );
+            },
+            child: TimelineTile(
+              direction: Axis.vertical,
+              nodeAlign: TimelineNodeAlign.start,
+              oppositeContents: null,
+              contents: Container(
+                padding: EdgeInsets.only(left: 15.0),
+                child: Text('Shopping started'),
               ),
-              startConnector: SizedBox(
-                height: hightValue,
-                child: DashedLineConnector(
-                  thickness: 1,
-                  dash: 2,
-                  gap: 2,
-                  color: Pendu.color('707070'),
+              node: TimelineNode(
+                indicator: ContainerIndicator(
+                    child: (screenValue >= 2)
+                        ? _buildCheckBox(boxColor: Pendu.color('FFCE8A'))
+                        : _buildUnCheckBox(boxColor: Pendu.color('FFCE8A'))),
+                startConnector: SizedBox(
+                  height: hightValue,
+                  child: DashedLineConnector(
+                    thickness: 1,
+                    dash: 2,
+                    gap: 2,
+                    color: Pendu.color('707070'),
+                  ),
                 ),
-              ),
-              endConnector: SizedBox(
-                height: hightValue,
-                child: DashedLineConnector(
-                  thickness: 1,
-                  dash: 2,
-                  gap: 2,
-                  color: Pendu.color('707070'),
+                endConnector: SizedBox(
+                  height: hightValue,
+                  child: DashedLineConnector(
+                    thickness: 1,
+                    dash: 2,
+                    gap: 2,
+                    color: Pendu.color('707070'),
+                  ),
                 ),
               ),
             ),
           ),
 //3
-          TimelineTile(
-            direction: Axis.vertical,
-            nodeAlign: TimelineNodeAlign.start,
-            oppositeContents: null,
-            contents: Container(
-              padding: EdgeInsets.only(left: 15.0),
-              child: Text('Shopping started'),
-            ),
-            node: TimelineNode(
-              indicator: ContainerIndicator(
-                child: (screenValue >= 3)
-                    ? Icon(
-                        Icons.check_box_outlined,
-                        color: Pendu.color('29ABE2'),
-                      )
-                    : Icon(
-                        Icons.check_box_outline_blank,
-                        color: Pendu.color('29ABE2'),
-                      ),
+          InkWell(
+            onTap: () {
+              setState(() {
+                screenValue = 3;
+              });
+            },
+            child: TimelineTile(
+              direction: Axis.vertical,
+              nodeAlign: TimelineNodeAlign.start,
+              oppositeContents: null,
+              contents: Container(
+                padding: EdgeInsets.only(left: 15.0),
+                child: Text('Shopping started'),
               ),
-              startConnector: SizedBox(
-                height: hightValue,
-                child: DashedLineConnector(
-                  thickness: 1,
-                  dash: 2,
-                  gap: 2,
-                  color: Pendu.color('707070'),
+              node: TimelineNode(
+                indicator: ContainerIndicator(
+                    child: (screenValue >= 3)
+                        ? _buildCheckBox(boxColor: Pendu.color('29ABE2'))
+                        : _buildUnCheckBox(boxColor: Pendu.color('29ABE2'))),
+                startConnector: SizedBox(
+                  height: hightValue,
+                  child: DashedLineConnector(
+                    thickness: 1,
+                    dash: 2,
+                    gap: 2,
+                    color: Pendu.color('707070'),
+                  ),
                 ),
               ),
             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pendu_driver/screen/screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
 
 class JobTimeline1 extends StatelessWidget {
@@ -39,7 +40,7 @@ class JobTimeline1 extends StatelessWidget {
                       )
                     ],
                   ),
-                  TimeLine(screenValue: 1),
+                  TimeLine(),
                   SizedBox(height: 30),
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 10.0),
@@ -72,7 +73,13 @@ class JobTimeline1 extends StatelessWidget {
                               width: MediaQuery.of(context).size.width / 2 - 30,
                               height: 45,
                               child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomePage()),
+                                  );
+                                },
                                 style: ElevatedButton.styleFrom(
                                   elevation: 0,
                                   primary: Pendu.color('FFCE8A'),
@@ -91,7 +98,16 @@ class JobTimeline1 extends StatelessWidget {
                               width: MediaQuery.of(context).size.width / 2 - 30,
                               height: 45,
                               child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  showModalBottomSheet(
+                                    backgroundColor: Colors.transparent,
+                                    isScrollControlled: true,
+                                    context: context,
+                                    builder: (builder) {
+                                      return ConfirmDeliveryPopUp();
+                                    },
+                                  );
+                                },
                                 style: ElevatedButton.styleFrom(
                                   elevation: 0,
                                   primary: Theme.of(context).accentColor,

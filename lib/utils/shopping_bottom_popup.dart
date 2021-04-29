@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pendu_driver/screen/screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
 
 class ShoppingBottomPopup extends StatefulWidget {
@@ -57,7 +58,12 @@ class _ShoppingBottomPopupState extends State<ShoppingBottomPopup> {
       width: MediaQuery.of(context).size.width - 30,
       height: 45,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => JobTimeline1()),
+          );
+        },
         style: ElevatedButton.styleFrom(
           elevation: 0,
           primary: Theme.of(context).primaryColor,
