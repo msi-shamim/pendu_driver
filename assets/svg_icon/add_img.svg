@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="26.602" height="23" viewBox="0 0 26.602 23">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_2671" data-name="Rectangle 2671" width="18.201" height="16.157" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="Group_1665" data-name="Group 1665" transform="translate(-301.398 -376)">
+    <g id="Group_1664" data-name="Group 1664" transform="translate(301.398 382.843)">
+      <g id="Group_1663" data-name="Group 1663" clip-path="url(#clip-path)">
+        <path id="Path_5862" data-name="Path 5862" d="M13.3,0H4.9A4.9,4.9,0,0,0,0,4.9v6.356a4.9,4.9,0,0,0,4.9,4.9h8.4a4.9,4.9,0,0,0,4.9-4.9V4.873A4.9,4.9,0,0,0,13.3,0M4.9,1.4h8.4a3.5,3.5,0,0,1,3.5,3.5v5.859a4.9,4.9,0,0,0-4.9-.231L9,7.981a4.9,4.9,0,0,0-6.146-.224L1.4,8.815V4.873A3.5,3.5,0,0,1,4.9,1.4M15.646,13.8l-2.6-2.247a3.5,3.5,0,0,1,3.5.777.328.328,0,0,0,.063.042,3.5,3.5,0,0,1-.966,1.428M4.9,14.7a3.5,3.5,0,0,1-3.5-3.5v-.665L3.682,8.815a3.5,3.5,0,0,1,4.375.161l6.3,5.523a3.341,3.341,0,0,1-1.057.2Z" transform="translate(0 -0.001)" fill="#030303"/>
+        <path id="Path_5863" data-name="Path 5863" d="M131.979,30.443a2.8,2.8,0,1,0-2.8-2.8,2.8,2.8,0,0,0,2.8,2.8m0-4.2a1.4,1.4,0,1,1-1.4,1.4,1.4,1.4,0,0,1,1.4-1.4" transform="translate(-120.078 -23.093)" fill="#030303"/>
+      </g>
+    </g>
+    <text id="_" data-name="+" transform="translate(323 389)" font-size="12" font-family="SegoeUI, Segoe UI"><tspan x="-4.104" y="0">+</tspan></text>
+  </g>
+</svg>
