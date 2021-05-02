@@ -10,4 +10,5 @@ export 'package:pendu_driver/screen/jobs_completed.dart';
 export 'package:pendu_driver/screen/job_timeline1.dart';
 export 'package:pendu_driver/screen/shopping.dart';
 export 'package:pendu_driver/screen/message_screen.dart';
+export 'package:pendu_driver/screen/profile.dart';
 export 'package:pendu_driver/utils/data.dart';

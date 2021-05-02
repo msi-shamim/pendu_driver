@@ -1,16 +1,18 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pendu_driver/screen/screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ShoppingItemsModel {
   bool checked;
   final String itemTitle;
   final double itemQuantity;
   bool unAvaliable;
-  Picture itemPic;
+  File itemPic;
 
   ShoppingItemsModel(
       {this.checked,
@@ -78,6 +80,63 @@ class Shopping extends StatefulWidget {
 
 class _ShoppingState extends State<Shopping> {
   bool answer = true;
+
+  final picker = ImagePicker();
+
+  Future getCameraImage(ShoppingItemsModel indexVar) async {
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        indexVar.itemPic = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  Future getGallaryImage(ShoppingItemsModel indexVar) async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        indexVar.itemPic = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  _showPicker(ShoppingItemsModel indexVar) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text('Photo Library'),
+                      onTap: () {
+                        getGallaryImage(indexVar);
+                        Navigator.of(context).pop();
+                      }),
+                  new ListTile(
+                    leading: new Icon(Icons.photo_camera),
+                    title: new Text('Camera'),
+                    onTap: () {
+                      getCameraImage(indexVar);
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
   bool completedFunction() {
     for (var i = 0; i < _shoppingItemList.length; i++) {
       if (_shoppingItemList[i].checked == true ||
@@ -262,11 +321,20 @@ class _ShoppingState extends State<Shopping> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        _showPicker(_shoppingItemList[index]);
+                      },
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 5.0),
-                        child: SvgPicture.asset('assets/svg_icon/add_img.svg',
-                            height: 24, width: 24, color: Colors.black),
+                        child: _shoppingItemList[index].itemPic != null
+                            ? Image.file(
+                                _shoppingItemList[index].itemPic,
+                                width: 30,
+                                height: 20,
+                                fit: BoxFit.fill,
+                              )
+                            : SvgPicture.asset('assets/svg_icon/add_img.svg',
+                                height: 24, width: 24, color: Colors.black),
                       ),
                     ),
                   ],
