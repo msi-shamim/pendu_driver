@@ -96,12 +96,13 @@ class _InviteFriendState extends State<InviteFriend> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Text(
           "Invite a friend, you both get \$15",
           style: PenduTextStyle().headerStyle,
         ),
+        SizedBox(height: 15.0),
         Container(
           width: MediaQuery.of(context).size.width / 1.2,
           child: Text(
@@ -111,9 +112,13 @@ class _InviteFriendState extends State<InviteFriend> {
             textAlign: TextAlign.center,
           ),
         ),
+        SizedBox(height: 10.0),
         _buildTextField(),
+        SizedBox(height: 10.0),
         _buildInviteBtn(),
+        SizedBox(height: 20.0),
         Text('More ways to invite'),
+        SizedBox(height: 10.0),
         Container(
           margin: EdgeInsets.symmetric(horizontal: 10.0),
           padding: EdgeInsets.symmetric(horizontal: 5.0),
@@ -127,7 +132,9 @@ class _InviteFriendState extends State<InviteFriend> {
             style: TextStyle(color: Colors.black54),
           ),
         ),
+        SizedBox(height: 10.0),
         _buildCopyLinkBtn(),
+        SizedBox(height: 15.0),
         _buildShareRow()
       ],
     );

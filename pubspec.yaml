@@ -38,6 +38,7 @@ dependencies:
   rating_bar: ^0.2.0
   image_picker: ^0.7.4
   percent_indicator: ^3.0.1
+  line_chart: ^1.1.11
 
 
 dev_dependencies:

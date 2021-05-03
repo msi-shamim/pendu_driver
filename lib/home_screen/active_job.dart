@@ -103,7 +103,11 @@ class _ActiveJobState extends State<ActiveJob> {
                           ],
                         ),
                         SizedBox(height: 5.0),
-                        DeliverAddressTable(),
+                        DeliverAddressTable(
+                          defineTextSTyle: TextStyle(
+                              color: Pendu.color('90A0B2'), fontSize: 10),
+                          lineHight: 20,
+                        ),
                         SizedBox(height: 5.0),
                         Row(
                           children: [

@@ -430,10 +430,11 @@ class _ProfileState extends State<Profile> {
                         ),
                         InkWell(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HomePage()));
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  AppVersionPopUp(),
+                            );
                           },
                           splashColor: Colors.white,
                           child: _buildMenuList(
