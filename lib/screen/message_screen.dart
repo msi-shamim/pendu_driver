@@ -1,69 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pendu_driver/screen/screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
-
-class ChatMessage {
-  final String text;
-  final bool isText;
-  final String messageDate;
-  final String messageTime;
-  final bool isSender;
-
-  ChatMessage({
-    this.text,
-    @required this.isText,
-    @required this.messageDate,
-    @required this.messageTime,
-    @required this.isSender,
-  });
-}
-
-List demeChatMessages = [
-  ChatMessage(
-    text:
-        "Hey Fly 9! \n I was tossing and turning all night! I haven't slept a wink in 3 days! What's keeping you up? Nothing really.",
-    isText: true,
-    messageDate: 'Nov 4',
-    messageTime: '18:03',
-    isSender: false,
-  ),
-  ChatMessage(
-    text:
-        "Where are you going? I am going to the salon for my haircut. What hairstyle would you like?",
-    isText: true,
-    messageDate: 'Nov 5',
-    messageTime: '10:25',
-    isSender: true,
-  ),
-  ChatMessage(
-    text: "assets/images/msg_img.png",
-    isText: false,
-    messageDate: 'Nov 6',
-    messageTime: '13:25',
-    isSender: false,
-  ),
-  ChatMessage(
-    text: "Thanks",
-    isText: true,
-    messageDate: 'Nov 7',
-    messageTime: '09:18',
-    isSender: true,
-  ),
-  ChatMessage(
-    text: "assets/images/msg_img.png",
-    isText: false,
-    messageDate: 'Nov 7',
-    messageTime: '09:20',
-    isSender: true,
-  ),
-  ChatMessage(
-    text: "You are Welcome",
-    isText: true,
-    messageDate: 'Nov 8',
-    messageTime: '11:40',
-    isSender: false,
-  ),
-];
 
 class MessageScreeen extends StatefulWidget {
   @override
