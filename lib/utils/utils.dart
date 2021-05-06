@@ -8,3 +8,5 @@ export 'package:pendu_driver/utils/timeline.dart';
 export 'package:pendu_driver/utils/shopping_bottom_popup.dart';
 export 'package:pendu_driver/utils/confirm_delivery_popup.dart';
 export 'package:pendu_driver/utils/image_picker.dart';
+export 'package:pendu_driver/utils/graph.dart';
+export 'package:pendu_driver/utils/line_titles.dart';

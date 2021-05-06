@@ -15,7 +15,7 @@ class _ProfileEarningsState extends State<ProfileEarnings> {
       children: [
         //Card
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+          margin: EdgeInsets.symmetric(vertical: 15.0),
           padding: EdgeInsets.symmetric(horizontal: 15.0),
           height: 120,
           width: double.infinity,
@@ -170,22 +170,40 @@ class _ProfileEarningsState extends State<ProfileEarnings> {
           preferredSize: Size.fromHeight(72),
           child: CommonAppBar(appBarTitle: 'Profile info'),
         ),
-        body: Container(
-          color: Theme.of(context).primaryColor,
-          width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.only(top: 10),
+        body: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20)),
-                color: Colors.white),
-            child: Column(
-              children: [
-                _buildCardSection(),
-                _buildButton(),
-              ],
+            color: Theme.of(context).primaryColor,
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.only(top: 10),
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20)),
+                  color: Colors.white),
+              child: Column(
+                children: [
+                  _buildCardSection(),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Earning enalytics',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 10.0),
+                    height: 218,
+                    child: Card(
+                      elevation: 5.0,
+                      child: GraphPage(),
+                    ),
+                  ),
+                  _buildButton(),
+                ],
+              ),
             ),
           ),
         ));

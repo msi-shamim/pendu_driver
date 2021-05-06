@@ -1,220 +1,144 @@
-// import 'package:flutter/material.dart';
-// import 'package:line_chart/charts/line-chart.widget.dart';
-// import 'package:line_chart/model/line-chart.model.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_sparkline/flutter_sparkline.dart';
+import 'package:pendu_driver/utils/utils.dart';
 
-// void main() {
-//   runApp(MyApp());
-// }
+import 'package:fl_chart/fl_chart.dart';
 
-// class MyApp extends StatelessWidget {
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter Demo',
-//       theme: ThemeData(
-//         // This is the theme of your application.
-//         //
-//         // Try running your application with "flutter run". You'll see the
-//         // application has a blue toolbar. Then, without quitting the app, try
-//         // changing the primarySwatch below to Colors.green and then invoke
-//         // "hot reload" (press "r" in the console where you ran "flutter run",
-//         // or simply save your changes to "hot reload" in a Flutter IDE).
-//         // Notice that the counter didn't reset back to zero; the application
-//         // is not restarted.
-//         primarySwatch: Colors.blue,
-//         // This makes the visual density adapt to the platform that you run
-//         // the app on. For desktop platforms, the controls will be smaller and
-//         // closer together (more dense) than on mobile platforms.
-//         visualDensity: VisualDensity.adaptivePlatformDensity,
-//       ),
-//       home: MyHomePage(),
-//     );
-//   }
-// }
+class GraphPage extends StatefulWidget {
+  @override
+  _GraphPageState createState() => _GraphPageState();
+}
 
-// class MyHomePage extends StatefulWidget {
+class _GraphPageState extends State<GraphPage>
+    with SingleTickerProviderStateMixin {
+  TabController tabController;
 
-//   // This widget is the home page of your application. It is stateful, meaning
-//   // that it has a State object (defined below) that contains fields that affect
-//   // how it looks.
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(length: 4, vsync: this, initialIndex: 1);
+  }
 
-//   // This class is the configuration for the state. It holds the values (in this
-//   // case the title) provided by the parent (in this case the App widget) and
-//   // used by the build method of the State. Fields in a Widget subclass are
-//   // always marked "final".
+  var daysData = [0.7, 0.3, 0.9, 1.0, 0.5];
+  var weeksData = [0.8, 0.9, 1.0, 0.5, 0.2, 0.7, 0.3];
+  var monthData = [0.1, 0.7, 0.3, 0.9, 1.0, 0.5, 0.0, 0.8, 0.2, 0.4, 0.3, 0.9];
+  var yearsData = [0.0, 0.8, 0.2, 0.4];
 
-//   @override
-//   _MyHomePageState createState() => _MyHomePageState();
-// }
+  @override
+  Widget build(BuildContext context) {
+    final List<Color> gradientColors = [
+      const Color(0xff60E99C),
+    ];
+    List<FlSpot> daysList = [
+      FlSpot(1, 2),
+      FlSpot(2, 5),
+      FlSpot(3, 2.5),
+      FlSpot(4, 4),
+      FlSpot(5, 3),
+      FlSpot(6, 1),
+    ];
+    Widget _buildGraph({var dataListName, String colorCode}) {
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        height: 80,
+        margin: EdgeInsets.symmetric(vertical: 50.0, horizontal: 10.0),
+        color: Colors.transparent,
+        child: Sparkline(
+          data: dataListName,
+          sharpCorners: false,
+          lineColor: Pendu.color(colorCode),
+          pointsMode: PointsMode.all,
+          pointColor: Colors.black,
+          pointSize: 5.0,
+        ),
+      );
+    }
 
-// class _MyHomePageState extends State<MyHomePage> {
-//   List<LineChartModel> data = [
-//     LineChartModel(amount: 300, date: DateTime(2020, 1, 1)),
-//     LineChartModel(amount: 200, date: DateTime(2020, 1, 2)),
-//     LineChartModel(amount: 300, date: DateTime(2020, 1, 3)),
-//     LineChartModel(amount: 500, date: DateTime(2020, 1, 4)),
-//     LineChartModel(amount: 800, date: DateTime(2020, 1, 5)),
-//     LineChartModel(amount: 200, date: DateTime(2020, 1, 6)),
-//     LineChartModel(amount: 120, date: DateTime(2020, 1, 7)),
-//     LineChartModel(amount: 140, date: DateTime(2020, 1, 8)),
-//     LineChartModel(amount: 110, date: DateTime(2020, 1, 9)),
-//     LineChartModel(amount: 250, date: DateTime(2020, 1, 10)),
-//     LineChartModel(amount: 390, date: DateTime(2020, 1, 11)),
-//     LineChartModel(amount: 1300, date: DateTime(2020, 1, 12)),
-//   ];
+    Widget _buildGraphDay() {
+      return LineChart(
+        LineChartData(
+          minX: 1,
+          maxX: daysList.length.toDouble(),
+          minY: 0,
+          maxY: 6,
+          titlesData: LineTitles.getTitleData(),
+          gridData: FlGridData(
+            show: true,
+            getDrawingHorizontalLine: (value) {
+              return FlLine(
+                color: Colors.grey,
+                strokeWidth: .5,
+              );
+            },
+            drawVerticalLine: false,
+            getDrawingVerticalLine: (value) {
+              return FlLine(
+                color: Colors.grey,
+                strokeWidth: 1,
+              );
+            },
+          ),
+          borderData: FlBorderData(
+            show: false,
+            border: Border.all(color: const Color(0xff37434d), width: 1),
+          ),
+          lineBarsData: [
+            LineChartBarData(
+              spots: daysList,
+              isCurved: true,
+              colors: gradientColors,
+              barWidth: 2,
+              dotData: FlDotData(
+                show: true,
+              ),
+              // belowBarData: BarAreaData(
+              //   show: true,
+              //   colors: gradientColors
+              //       .map((color) => color.withOpacity(0.3))
+              //       .toList(),
+              // ),
+            ),
+          ],
+        ),
+      );
+    }
 
-//   int _counter = 0;
-
-//   void _incrementCounter() {
-//     setState(() {
-//       data = [
-//         LineChartModel(amount: 500, date: DateTime(2020, 1, 4)),
-//         LineChartModel(amount: 200, date: DateTime(2020, 1, 2)),
-//         LineChartModel(amount: 200, date: DateTime(2020, 1, 6)),
-//         LineChartModel(amount: 800, date: DateTime(2020, 1, 5)),
-//         LineChartModel(amount: 1300, date: DateTime(2020, 1, 12)),
-//         LineChartModel(amount: 300, date: DateTime(2020, 1, 3)),
-//         LineChartModel(amount: 120, date: DateTime(2020, 1, 7)),
-//         LineChartModel(amount: 250, date: DateTime(2020, 1, 10)),
-//         LineChartModel(amount: 140, date: DateTime(2020, 1, 8)),
-//         LineChartModel(amount: 100, date: DateTime(2020, 1, 1)),
-//         LineChartModel(amount: 390, date: DateTime(2020, 1, 11)),
-//         LineChartModel(amount: 110, date: DateTime(2020, 1, 9)),
-//         LineChartModel(amount: 410, date: DateTime(2020, 4, 9)),
-//       ];
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     Paint circlePaint = Paint()..color = Colors.black;
-
-//     Paint insideCirclePaint = Paint()..color = Colors.white;
-
-//     Paint linePaint = Paint()
-//       ..strokeWidth = 3
-//       ..style = PaintingStyle.stroke
-//       ..color = Colors.black;
-
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Line Chart Showcase'),
-//       ),
-//       body: ListView(
-//         children: [
-//           // First chart
-//           Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               Text(
-//                 'Line chart - Line, Circles, Pointer',
-//                 style: Theme.of(context).textTheme.headline5,
-//               ),
-//               LineChart(
-//                 width: MediaQuery.of(context).size.width,
-//                 height: 180,
-//                 data: data,
-//                 linePaint: linePaint,
-//                 circlePaint: circlePaint,
-//                 showPointer: true,
-//                 showCircles: true,
-//                 customDraw: (Canvas canvas, Size size) {},
-//                 linePointerDecoration: BoxDecoration(
-//                   color: Colors.black,
-//                 ),
-//                 pointerDecoration: BoxDecoration(
-//                   shape: BoxShape.circle,
-//                   color: Colors.black,
-//                 ),
-//                 insideCirclePaint: insideCirclePaint,
-//                 onValuePointer: (LineChartModelCallback value) {
-//                   print('${value.chart} ${value.percentage}');
-//                 },
-//                 onDropPointer: () {
-//                   print('onDropPointer');
-//                 },
-//                 insidePadding: 16,
-//               ),
-//             ],
-//           ),
-
-//           // Second Chart
-//           Padding(
-//             padding: EdgeInsets.symmetric(
-//               vertical: 24,
-//             ),
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 Text(
-//                   'Line chart - Line, Pointer',
-//                   style: Theme.of(context).textTheme.headline5,
-//                 ),
-//                 LineChart(
-//                   width: MediaQuery.of(context).size.width,
-//                   height: 180,
-//                   data: data,
-//                   linePaint: linePaint,
-//                   circlePaint: circlePaint,
-//                   showPointer: true,
-//                   showCircles: false,
-//                   customDraw: (Canvas canvas, Size size) {},
-//                   linePointerDecoration: BoxDecoration(
-//                     color: Colors.black,
-//                   ),
-//                   pointerDecoration: BoxDecoration(
-//                     shape: BoxShape.circle,
-//                     color: Colors.black,
-//                   ),
-//                   insideCirclePaint: insideCirclePaint,
-//                   onValuePointer: (LineChartModelCallback value) {
-//                     print('${value.chart} ${value.percentage}');
-//                   },
-//                   onDropPointer: () {
-//                     print('onDropPointer');
-//                   },
-//                 ),
-//               ],
-//             ),
-//           ),
-
-//           // Third chart
-//           Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               Text(
-//                 'Line chart - Line',
-//                 style: Theme.of(context).textTheme.headline5,
-//               ),
-//               LineChart(
-//                 width: MediaQuery.of(context).size.width,
-//                 height: 180,
-//                 data: data,
-//                 linePaint: linePaint,
-//                 circlePaint: circlePaint,
-//                 showPointer: false,
-//                 showCircles: false,
-//                 customDraw: (Canvas canvas, Size size) {},
-//                 linePointerDecoration: BoxDecoration(
-//                   color: Colors.black,
-//                 ),
-//                 pointerDecoration: BoxDecoration(
-//                   shape: BoxShape.circle,
-//                   color: Colors.black,
-//                 ),
-//                 insideCirclePaint: insideCirclePaint,
-//                 onValuePointer: (LineChartModelCallback value) {
-//                   print('${value.chart} ${value.percentage}');
-//                 },
-//                 onDropPointer: () {
-//                   print('onDropPointer');
-//                 },
-//               ),
-//             ],
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            height: 60,
+            width: double.infinity,
+            color: Colors.grey[200],
+            child: TabBar(
+              labelColor: Colors.black,
+              unselectedLabelColor: Colors.grey,
+              indicatorSize: TabBarIndicatorSize.label,
+              indicatorPadding: EdgeInsets.symmetric(horizontal: 2.0),
+              indicatorWeight: 2.0,
+              controller: tabController,
+              tabs: [
+                Text('Days'),
+                Text('Weeks'),
+                Text('Months'),
+                Text('Years'),
+              ],
+            ),
+          ),
+          Container(
+            //margin: EdgeInsets.symmetric(horizontal: 10.0),
+            height: 150,
+            child: TabBarView(controller: tabController, children: [
+              // _buildGraph(dataListName: daysData, colorCode: '5BDB98'),
+              _buildGraphDay(),
+              _buildGraph(dataListName: weeksData, colorCode: 'FFCE8A'),
+              _buildGraph(dataListName: monthData, colorCode: '29ABE2'),
+              _buildGraph(dataListName: yearsData, colorCode: 'CCABFF'),
+            ]),
+          ),
+        ],
+      ),
+    );
+  }
+}
