@@ -14,7 +14,7 @@ export 'package:pendu_driver/screen/profile.dart';
 export 'package:pendu_driver/screen/profile_info.dart';
 export 'package:pendu_driver/screen/profile_earnings.dart';
 export 'package:pendu_driver/screen/profile_app_version_popup.dart';
-export 'package:pendu_driver/screen/profile_update.dart';
+export 'package:pendu_driver/screen/profile_notice_board.dart';
 export 'package:pendu_driver/screen/profile_refer_friend.dart';
 export 'package:pendu_driver/screen/profile_payment_card.dart';
 export 'package:pendu_driver/screen/profile_bank_details.dart';

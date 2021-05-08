@@ -1,5 +1,6 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pendu_driver/screen/screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -72,7 +73,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _uploadButton() {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10.0),
+      margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
       child: DottedBorder(
         color: Theme.of(context).accentColor,
         borderType: BorderType.RRect,
@@ -80,7 +81,7 @@ class _RegisterPageState extends State<RegisterPage> {
         strokeWidth: 1,
         radius: Radius.circular(5.0),
         child: SizedBox(
-          width: MediaQuery.of(context).size.width / 2 - 20,
+          width: MediaQuery.of(context).size.width / 2 - 30,
           height: 45,
           child: ElevatedButton(
             onPressed: () {},
@@ -149,7 +150,10 @@ class _RegisterPageState extends State<RegisterPage> {
       width: MediaQuery.of(context).size.width - 30,
       height: 45,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => HomePage()));
+        },
         style: ElevatedButton.styleFrom(
           elevation: 0,
           primary: Theme.of(context).primaryColor,
@@ -176,98 +180,99 @@ class _RegisterPageState extends State<RegisterPage> {
           preferredSize: Size.fromHeight(72),
           child: CommonAppBar(appBarTitle: 'Register'),
         ),
-        body: SingleChildScrollView(
+        body: Container(
+          decoration: BoxDecoration(color: Theme.of(context).primaryColor),
           child: Container(
-            decoration: BoxDecoration(color: Theme.of(context).primaryColor),
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15.0),
-                      topRight: Radius.circular(15.0))),
-              child: Column(
-                children: [
-                  Text(
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15.0),
+                    topRight: Radius.circular(15.0))),
+            child: ListView(
+              children: [
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
                     'Become a dropper',
                     style: PenduTextStyle().headerStyle,
                   ),
-                  SizedBox(height: 20.0),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _builtTextField(
-                          title: 'First Name',
-                          svgUrl: 'assets/svg_icon/profile.svg',
-                          hinText: 'John',
-                        ),
+                ),
+                SizedBox(height: 20.0),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _builtTextField(
+                        title: 'First Name',
+                        svgUrl: 'assets/svg_icon/profile.svg',
+                        hinText: 'John',
                       ),
-                      SizedBox(width: 10.0),
-                      Expanded(
-                        child: _builtTextField(
-                          title: 'Last Name',
-                          svgUrl: 'assets/svg_icon/profile.svg',
-                          hinText: 'Doe',
-                        ),
+                    ),
+                    SizedBox(width: 10.0),
+                    Expanded(
+                      child: _builtTextField(
+                        title: 'Last Name',
+                        svgUrl: 'assets/svg_icon/profile.svg',
+                        hinText: 'Doe',
                       ),
-                    ],
-                  ),
-                  _builtTextField(
-                    title: 'Email',
-                    svgUrl: 'assets/svg_icon/mail.svg',
-                    hinText: 'Enter your email',
-                  ),
-                  _builtTextField(
-                    title: 'Phone No',
-                    svgUrl: 'assets/svg_icon/telephone.svg',
-                    hinText: '+880',
-                  ),
-                  _builtTextField(
-                    title: 'Password',
-                    svgUrl: 'assets/svg_icon/unlock.svg',
-                    hinText: '*** *** *** ***',
-                  ),
-                  _builtTextField(
-                    title: 'ABN',
-                    svgUrl: 'assets/svg_icon/ABN.svg',
-                    hinText: '*** *** *** ***',
-                  ),
-                  _builtTextField(
-                      title: 'Vehicle type',
-                      svgUrl: 'assets/svg_icon/vehicle_type.svg',
-                      hinText: 'Select your vehicle',
-                      isSufix: true),
-                  _builtTextField(
-                      title: 'Please select category',
-                      svgUrl: 'assets/svg_icon/category.svg',
-                      hinText: 'Select your category',
-                      isSufix: true),
-                  SizedBox(height: 10.0),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Upload driving licence -Front & Back',
-                        style: PenduTextStyle().subHeaderStyle,
-                      )),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _uploadButton(),
-                      _uploadButton(),
-                    ],
-                  ),
-                  SizedBox(height: 10.0),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Upload profile image',
-                        style: PenduTextStyle().subHeaderStyle,
-                      )),
-                  _buildProfileUpload(),
-                  _buildButton(),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+                _builtTextField(
+                  title: 'Email',
+                  svgUrl: 'assets/svg_icon/mail.svg',
+                  hinText: 'Enter your email',
+                ),
+                _builtTextField(
+                  title: 'Phone No',
+                  svgUrl: 'assets/svg_icon/telephone.svg',
+                  hinText: '+880',
+                ),
+                _builtTextField(
+                  title: 'Password',
+                  svgUrl: 'assets/svg_icon/unlock.svg',
+                  hinText: '*** *** *** ***',
+                ),
+                _builtTextField(
+                  title: 'ABN',
+                  svgUrl: 'assets/svg_icon/ABN.svg',
+                  hinText: '*** *** *** ***',
+                ),
+                _builtTextField(
+                    title: 'Vehicle type',
+                    svgUrl: 'assets/svg_icon/vehicle_type.svg',
+                    hinText: 'Select your vehicle',
+                    isSufix: true),
+                _builtTextField(
+                    title: 'Please select category',
+                    svgUrl: 'assets/svg_icon/category.svg',
+                    hinText: 'Select your category',
+                    isSufix: true),
+                SizedBox(height: 10.0),
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Upload driving licence -Front & Back',
+                      style: PenduTextStyle().subHeaderStyle,
+                    )),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _uploadButton(),
+                    _uploadButton(),
+                  ],
+                ),
+                SizedBox(height: 10.0),
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Upload profile image',
+                      style: PenduTextStyle().subHeaderStyle,
+                    )),
+                _buildProfileUpload(),
+                _buildButton(),
+              ],
             ),
           ),
         ));

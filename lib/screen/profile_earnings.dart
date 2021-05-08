@@ -168,7 +168,7 @@ class _ProfileEarningsState extends State<ProfileEarnings> {
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(72),
-          child: CommonAppBar(appBarTitle: 'Profile info'),
+          child: CommonAppBar(appBarTitle: 'Earnings'),
         ),
         body: SingleChildScrollView(
           child: Container(

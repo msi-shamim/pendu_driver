@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pendu_driver/screen/screen.dart';
 import 'package:pendu_driver/utils/text_style.dart';
 
-class OfferSent extends StatelessWidget {
+class OfferSent extends StatefulWidget {
+  @override
+  _OfferSentState createState() => _OfferSentState();
+}
+
+class _OfferSentState extends State<OfferSent> {
   String discription =
       "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.";
 
@@ -13,7 +19,10 @@ class OfferSent extends StatelessWidget {
         width: MediaQuery.of(context).size.width - 30,
         height: 45,
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => JobsView()));
+          },
           style: ElevatedButton.styleFrom(
             elevation: 0,
             primary: Theme.of(context).accentColor,
@@ -38,7 +47,10 @@ class OfferSent extends StatelessWidget {
         width: MediaQuery.of(context).size.width - 30,
         height: 45,
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => HomePage()));
+          },
           style: ElevatedButton.styleFrom(
             elevation: 0,
             primary: Theme.of(context).primaryColor,

@@ -19,14 +19,17 @@ class _ProfileReferFriendState extends State<ProfileReferFriend> {
             color: Theme.of(context).primaryColor,
             width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.only(top: 10),
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 50),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20)),
-                  color: Colors.white),
-              child: InviteFriend(),
+            child: SingleChildScrollView(
+              child: Container(
+                height: MediaQuery.of(context).size.height - 110,
+                padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 50),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20)),
+                    color: Colors.white),
+                child: InviteFriend(),
+              ),
             )));
   }
 }

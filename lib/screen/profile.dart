@@ -278,7 +278,9 @@ class _ProfileState extends State<Profile> {
     double _width = MediaQuery.of(context).size.width;
 
     return MaterialApp(
+      theme: Pendu.lightTheme,
       home: Scaffold(
+        bottomNavigationBar: BottomNavigation(initValue: "My profile"),
         body: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
@@ -313,7 +315,7 @@ class _ProfileState extends State<Profile> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomePage()));
+                                    builder: (context) => ProfileInfo()));
                           },
                           splashColor: Colors.white,
                           child: _buildMenuList(
@@ -326,7 +328,7 @@ class _ProfileState extends State<Profile> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomePage()));
+                                    builder: (context) => ProfileEarnings()));
                           },
                           splashColor: Colors.white,
                           child: _buildMenuList(
@@ -339,7 +341,8 @@ class _ProfileState extends State<Profile> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomePage()));
+                                    builder: (context) =>
+                                        ProfileNoticeBoard()));
                           },
                           splashColor: Colors.white,
                           child: _buildMenuList(
@@ -352,7 +355,8 @@ class _ProfileState extends State<Profile> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomePage()));
+                                    builder: (context) =>
+                                        ProfilePaymentCard()));
                           },
                           splashColor: Colors.white,
                           child: _buildMenuList(
@@ -366,7 +370,8 @@ class _ProfileState extends State<Profile> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomePage()));
+                                    builder: (context) =>
+                                        ProfileReferFriend()));
                           },
                           splashColor: Colors.white,
                           child: _buildMenuList(
@@ -379,7 +384,8 @@ class _ProfileState extends State<Profile> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomePage()));
+                                    builder: (context) =>
+                                        ProfileNotification()));
                           },
                           splashColor: Colors.white,
                           child: _buildMenuList(
@@ -393,7 +399,8 @@ class _ProfileState extends State<Profile> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomePage()));
+                                    builder: (context) =>
+                                        ProfileBankDatails()));
                           },
                           splashColor: Colors.white,
                           child: _buildMenuList(
@@ -407,7 +414,8 @@ class _ProfileState extends State<Profile> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomePage()));
+                                    builder: (context) =>
+                                        ProfileChatSupport()));
                           },
                           splashColor: Colors.white,
                           child: _buildMenuList(
@@ -420,7 +428,7 @@ class _ProfileState extends State<Profile> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomePage()));
+                                    builder: (context) => ProfileFAQ()));
                           },
                           splashColor: Colors.white,
                           child: _buildMenuList(

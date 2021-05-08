@@ -34,56 +34,58 @@ class _ProfileInfoState extends State<ProfileInfo> {
           preferredSize: Size.fromHeight(72),
           child: CommonAppBar(appBarTitle: 'Profile info'),
         ),
-        body: Container(
-            color: Theme.of(context).primaryColor,
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.only(top: 10),
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20)),
-                  color: Colors.white),
-              child: Column(
-                children: [
-                  CircleAvatar(
-                    radius: 44,
-                    backgroundColor: Pendu.color('5BDB98'),
-                    child: CircleAvatar(
-                        radius: 40,
-                        backgroundImage:
-                            NetworkImage(profileInfoList[0].imgUrl)),
-                  ),
-                  Text(
-                    profileInfoList[0].name,
-                    style: TextStyle(fontSize: 18, color: Colors.black),
-                  ),
-                  Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
-                    child: Column(
-                      children: [
-                        _buildInfoList(
-                            topic: profileInfoList[0].location,
-                            iconUrl: 'assets/svg_icon/location.svg'),
-                        _buildInfoList(
-                            topic: profileInfoList[0].phone,
-                            iconUrl: 'assets/svg_icon/phone.svg'),
-                        _buildInfoList(
-                            topic: profileInfoList[0].dob,
-                            iconUrl: 'assets/svg_icon/calender.svg'),
-                        _buildInfoList(
-                            topic: profileInfoList[0].vehicleType,
-                            iconUrl: 'assets/svg_icon/car.svg'),
-                        _buildInfoList(
-                            topic: profileInfoList[0].category,
-                            iconUrl: 'assets/svg_icon/category2.svg'),
-                      ],
+        body: SingleChildScrollView(
+          child: Container(
+              color: Theme.of(context).primaryColor,
+              width: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.only(top: 10),
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20)),
+                    color: Colors.white),
+                child: Column(
+                  children: [
+                    CircleAvatar(
+                      radius: 44,
+                      backgroundColor: Pendu.color('5BDB98'),
+                      child: CircleAvatar(
+                          radius: 40,
+                          backgroundImage:
+                              NetworkImage(profileInfoList[0].imgUrl)),
                     ),
-                  )
-                ],
-              ),
-            )));
+                    Text(
+                      profileInfoList[0].name,
+                      style: TextStyle(fontSize: 18, color: Colors.black),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 10.0, vertical: 15.0),
+                      child: Column(
+                        children: [
+                          _buildInfoList(
+                              topic: profileInfoList[0].location,
+                              iconUrl: 'assets/svg_icon/location.svg'),
+                          _buildInfoList(
+                              topic: profileInfoList[0].phone,
+                              iconUrl: 'assets/svg_icon/phone.svg'),
+                          _buildInfoList(
+                              topic: profileInfoList[0].dob,
+                              iconUrl: 'assets/svg_icon/calender.svg'),
+                          _buildInfoList(
+                              topic: profileInfoList[0].vehicleType,
+                              iconUrl: 'assets/svg_icon/car.svg'),
+                          _buildInfoList(
+                              topic: profileInfoList[0].category,
+                              iconUrl: 'assets/svg_icon/category2.svg'),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              )),
+        ));
   }
 }

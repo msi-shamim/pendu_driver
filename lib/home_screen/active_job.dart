@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pendu_driver/screen/screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
 
 class ActiveJob extends StatefulWidget {
@@ -132,7 +133,10 @@ class _ActiveJobState extends State<ActiveJob> {
               width: MediaQuery.of(context).size.width / 2 + 80,
               height: 35,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => JobSearch()));
+                },
                 style: ElevatedButton.styleFrom(
                   elevation: 0,
                   primary: Theme.of(context).primaryColor,

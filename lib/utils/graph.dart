@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sparkline/flutter_sparkline.dart';
+
 import 'package:pendu_driver/utils/utils.dart';
 
 import 'package:fl_chart/fl_chart.dart';
@@ -19,15 +19,19 @@ class _GraphPageState extends State<GraphPage>
     tabController = TabController(length: 4, vsync: this, initialIndex: 1);
   }
 
-  var daysData = [0.7, 0.3, 0.9, 1.0, 0.5];
-  var weeksData = [0.8, 0.9, 1.0, 0.5, 0.2, 0.7, 0.3];
-  var monthData = [0.1, 0.7, 0.3, 0.9, 1.0, 0.5, 0.0, 0.8, 0.2, 0.4, 0.3, 0.9];
-  var yearsData = [0.0, 0.8, 0.2, 0.4];
-
   @override
   Widget build(BuildContext context) {
     final List<Color> gradientColors = [
       const Color(0xff60E99C),
+    ];
+    final List<Color> gradientColorsWeek = [
+      const Color(0xffFFCE8A),
+    ];
+    final List<Color> gradientColorsMonth = [
+      const Color(0xff29ABE2),
+    ];
+    final List<Color> gradientColorsYear = [
+      const Color(0xffCCABFF),
     ];
     List<FlSpot> daysList = [
       FlSpot(1, 2),
@@ -35,24 +39,45 @@ class _GraphPageState extends State<GraphPage>
       FlSpot(3, 2.5),
       FlSpot(4, 4),
       FlSpot(5, 3),
-      FlSpot(6, 1),
     ];
-    Widget _buildGraph({var dataListName, String colorCode}) {
-      return Container(
-        width: MediaQuery.of(context).size.width,
-        height: 80,
-        margin: EdgeInsets.symmetric(vertical: 50.0, horizontal: 10.0),
-        color: Colors.transparent,
-        child: Sparkline(
-          data: dataListName,
-          sharpCorners: false,
-          lineColor: Pendu.color(colorCode),
-          pointsMode: PointsMode.all,
-          pointColor: Colors.black,
-          pointSize: 5.0,
-        ),
-      );
-    }
+    List<FlSpot> weeksList = [
+      FlSpot(1, 2),
+      FlSpot(2, 5),
+      FlSpot(3, 2.5),
+      FlSpot(4, 4),
+      FlSpot(5, 3),
+      FlSpot(6, 1),
+      FlSpot(7, 3.5),
+    ];
+    List<FlSpot> monthList = [
+      FlSpot(1, 2),
+      FlSpot(2, 5),
+      FlSpot(5, 2.5),
+      FlSpot(8, 2),
+      FlSpot(10, 5),
+      FlSpot(13, 2.5),
+      FlSpot(16, 4),
+      FlSpot(19, 3),
+      FlSpot(21, 1),
+      FlSpot(23, 4),
+      FlSpot(26, 3),
+      FlSpot(28, 1),
+      FlSpot(30, 3.5),
+    ];
+    List<FlSpot> yearList = [
+      FlSpot(1, 2),
+      FlSpot(2, 5),
+      FlSpot(3, 2.5),
+      FlSpot(4, 4),
+      FlSpot(5, 3),
+      FlSpot(6, 1),
+      FlSpot(7, 3.5),
+      FlSpot(8, 2.5),
+      FlSpot(9, 4),
+      FlSpot(10, 3),
+      FlSpot(11, 1),
+      FlSpot(12, 3),
+    ];
 
     Widget _buildGraphDay() {
       return LineChart(
@@ -91,12 +116,117 @@ class _GraphPageState extends State<GraphPage>
               dotData: FlDotData(
                 show: true,
               ),
-              // belowBarData: BarAreaData(
-              //   show: true,
-              //   colors: gradientColors
-              //       .map((color) => color.withOpacity(0.3))
-              //       .toList(),
-              // ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    Widget _buildGraphWeek() {
+      return LineChart(
+        LineChartData(
+          minX: 1,
+          maxX: weeksList.length.toDouble(),
+          minY: 0,
+          maxY: 6,
+          titlesData: LineTitles.getWeekData(),
+          gridData: FlGridData(
+            show: true,
+            getDrawingHorizontalLine: (value) {
+              return FlLine(
+                color: Colors.grey,
+                strokeWidth: .5,
+              );
+            },
+            drawVerticalLine: false,
+          ),
+          borderData: FlBorderData(
+            show: false,
+            border: Border.all(color: const Color(0xff37434d), width: 1),
+          ),
+          lineBarsData: [
+            LineChartBarData(
+              spots: weeksList,
+              isCurved: true,
+              colors: gradientColorsWeek,
+              barWidth: 2,
+              dotData: FlDotData(
+                show: true,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    Widget _buildGraphMonth() {
+      return LineChart(
+        LineChartData(
+          minX: 1,
+          maxX: 30,
+          minY: 0,
+          maxY: 6,
+          titlesData: LineTitles.getMonthData(),
+          gridData: FlGridData(
+            show: true,
+            getDrawingHorizontalLine: (value) {
+              return FlLine(
+                color: Colors.grey,
+                strokeWidth: .5,
+              );
+            },
+            drawVerticalLine: false,
+          ),
+          borderData: FlBorderData(
+            show: false,
+            border: Border.all(color: const Color(0xff37434d), width: 1),
+          ),
+          lineBarsData: [
+            LineChartBarData(
+              spots: monthList,
+              isCurved: true,
+              colors: gradientColorsMonth,
+              barWidth: 2,
+              dotData: FlDotData(
+                show: true,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    Widget _buildGraphYear() {
+      return LineChart(
+        LineChartData(
+          minX: 1,
+          maxX: yearList.length.toDouble(),
+          minY: 0,
+          maxY: 6,
+          titlesData: LineTitles.getYearData(),
+          gridData: FlGridData(
+            show: true,
+            getDrawingHorizontalLine: (value) {
+              return FlLine(
+                color: Colors.grey,
+                strokeWidth: .5,
+              );
+            },
+            drawVerticalLine: false,
+          ),
+          borderData: FlBorderData(
+            show: false,
+            border: Border.all(color: const Color(0xff37434d), width: 1),
+          ),
+          lineBarsData: [
+            LineChartBarData(
+              spots: yearList,
+              isCurved: true,
+              colors: gradientColorsYear,
+              barWidth: 2,
+              dotData: FlDotData(
+                show: true,
+              ),
             ),
           ],
         ),
@@ -132,9 +262,9 @@ class _GraphPageState extends State<GraphPage>
             child: TabBarView(controller: tabController, children: [
               // _buildGraph(dataListName: daysData, colorCode: '5BDB98'),
               _buildGraphDay(),
-              _buildGraph(dataListName: weeksData, colorCode: 'FFCE8A'),
-              _buildGraph(dataListName: monthData, colorCode: '29ABE2'),
-              _buildGraph(dataListName: yearsData, colorCode: 'CCABFF'),
+              _buildGraphWeek(),
+              _buildGraphMonth(),
+              _buildGraphYear(),
             ]),
           ),
         ],

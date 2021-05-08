@@ -147,7 +147,10 @@ class _JobSearchState extends State<JobSearch> {
             width: MediaQuery.of(context).size.width / 1.2,
             height: 40,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => OfferSent()));
+              },
               style: ElevatedButton.styleFrom(
                 elevation: 0,
                 primary: Pendu.color('FFCE8A'),

@@ -23,27 +23,22 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
+  buttons_tabbar: ^1.2.1
   cupertino_icons: ^1.0.2
-  flutter_svg: ^0.21.0-nullsafety.0
   dotted_border: ^2.0.0
   dotted_line: ^3.0.0
   draggable_bottom_sheet: ^0.1.2
-  buttons_tabbar: ^1.2.1
+  expand_widget: ^2.0.0
+  fl_chart: ^0.36.0
+  flutter_sparkline: ^0.1.0
+  flutter_svg: ^0.21.0-nullsafety.0
+  flutter_switch: ^0.3.1
+  image_picker: ^0.7.4
+  motion_tab_bar: ^0.1.5
+  percent_indicator: ^3.0.1
+  rating_bar: ^0.2.0
   tabbar: ^0.1.1
   timelines: ^0.1.0
-  rating_bar: ^0.2.0
-  image_picker: ^0.7.4
-  percent_indicator: ^3.0.1
-  expand_widget: ^2.0.0
-  flutter_sparkline: ^0.1.0
-  flutter_switch: ^0.3.1
-  fl_chart: ^0.36.0
-
-
 
 dev_dependencies:
   flutter_test:
@@ -51,7 +46,6 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter.
 flutter:
 
@@ -65,15 +59,15 @@ flutter:
     - assets/
     - assets/images/
     - assets/svg_icon/
-   
-  #   - images/a_dot_ham.jpeg
 
+  fonts:
+    - family: PenduIcon
+      fonts:
+        - asset: assets/fonts/PenduIcon.ttf
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a

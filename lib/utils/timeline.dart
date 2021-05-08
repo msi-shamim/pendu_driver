@@ -4,13 +4,13 @@ import 'package:pendu_driver/utils/utils.dart';
 import 'package:timelines/timelines.dart';
 
 class TimeLine extends StatefulWidget {
+  int screenValue = 0;
+  TimeLine({this.screenValue});
   @override
   _TimeLineState createState() => _TimeLineState();
 }
 
 class _TimeLineState extends State<TimeLine> {
-  int screenValue = 0;
-
   final double hightValue = 12;
 
   @override
@@ -54,7 +54,7 @@ class _TimeLineState extends State<TimeLine> {
           InkWell(
             onTap: () {
               setState(() {
-                screenValue = 1;
+                widget.screenValue = 1;
               });
             },
             child: TimelineTile(
@@ -67,7 +67,7 @@ class _TimeLineState extends State<TimeLine> {
               ),
               node: TimelineNode(
                 indicator: ContainerIndicator(
-                    child: (screenValue >= 1)
+                    child: (widget.screenValue >= 1)
                         ? _buildCheckBox(boxColor: Pendu.color('F97A7A'))
                         : _buildUnCheckBox(boxColor: Pendu.color('F97A7A'))),
                 endConnector: SizedBox(
@@ -87,7 +87,7 @@ class _TimeLineState extends State<TimeLine> {
           InkWell(
             onTap: () {
               setState(() {
-                screenValue = 2;
+                widget.screenValue = 2;
               });
               Navigator.push(
                 context,
@@ -104,7 +104,7 @@ class _TimeLineState extends State<TimeLine> {
               ),
               node: TimelineNode(
                 indicator: ContainerIndicator(
-                    child: (screenValue >= 2)
+                    child: (widget.screenValue >= 2)
                         ? _buildCheckBox(boxColor: Pendu.color('FFCE8A'))
                         : _buildUnCheckBox(boxColor: Pendu.color('FFCE8A'))),
                 startConnector: SizedBox(
@@ -132,7 +132,7 @@ class _TimeLineState extends State<TimeLine> {
           InkWell(
             onTap: () {
               setState(() {
-                screenValue = 3;
+                widget.screenValue = 3;
               });
             },
             child: TimelineTile(
@@ -141,11 +141,11 @@ class _TimeLineState extends State<TimeLine> {
               oppositeContents: null,
               contents: Container(
                 padding: EdgeInsets.only(left: 15.0),
-                child: Text('Shopping started'),
+                child: Text('Strat delivery'),
               ),
               node: TimelineNode(
                 indicator: ContainerIndicator(
-                    child: (screenValue >= 3)
+                    child: (widget.screenValue >= 3)
                         ? _buildCheckBox(boxColor: Pendu.color('29ABE2'))
                         : _buildUnCheckBox(boxColor: Pendu.color('29ABE2'))),
                 startConnector: SizedBox(

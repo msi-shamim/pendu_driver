@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pendu_driver/auth_screen/auth_screen.dart';
+import 'package:pendu_driver/screen/screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
 
 class LogIn extends StatefulWidget {
@@ -62,7 +64,12 @@ class _LogInState extends State<LogIn> {
                     width: MediaQuery.of(context).size.width - 50,
                     height: 45,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomePage()));
+                      },
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
                         primary: Theme.of(context).primaryColor,
@@ -88,7 +95,12 @@ class _LogInState extends State<LogIn> {
                     width: MediaQuery.of(context).size.width - 100,
                     height: 48,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => RegisterPage()));
+                      },
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
                         primary: Theme.of(context).accentColor,

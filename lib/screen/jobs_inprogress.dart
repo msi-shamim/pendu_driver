@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pendu_driver/screen/screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
 
 class JobsInProgress extends StatefulWidget {
@@ -12,7 +13,14 @@ class _JobsInProgressState extends State<JobsInProgress> {
       width: MediaQuery.of(context).size.width - 80,
       height: 38,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => JobTimeline1(
+                        screenValue: 1,
+                      )));
+        },
         style: ElevatedButton.styleFrom(
           elevation: 0,
           primary: Theme.of(context).primaryColor,

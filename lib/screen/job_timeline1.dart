@@ -3,7 +3,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pendu_driver/screen/screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
 
-class JobTimeline1 extends StatelessWidget {
+class JobTimeline1 extends StatefulWidget {
+  int screenValue = 1;
+  JobTimeline1({this.screenValue});
+
+  @override
+  _JobTimeline1State createState() => _JobTimeline1State();
+}
+
+class _JobTimeline1State extends State<JobTimeline1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +48,9 @@ class JobTimeline1 extends StatelessWidget {
                       )
                     ],
                   ),
-                  TimeLine(),
+                  TimeLine(
+                    screenValue: widget.screenValue,
+                  ),
                   SizedBox(height: 30),
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 10.0),

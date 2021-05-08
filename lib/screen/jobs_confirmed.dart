@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pendu_driver/screen/screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
 
 class JobsConfirmed extends StatefulWidget {
@@ -12,7 +13,16 @@ class _JobsConfirmedState extends State<JobsConfirmed> {
       width: MediaQuery.of(context).size.width / 2 - 50,
       height: 38,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+            backgroundColor: Colors.transparent,
+            isScrollControlled: true,
+            context: context,
+            builder: (builder) {
+              return MessageScreeen();
+            },
+          );
+        },
         style: ElevatedButton.styleFrom(
           elevation: 0,
           primary: Colors.white,
@@ -37,7 +47,14 @@ class _JobsConfirmedState extends State<JobsConfirmed> {
       width: MediaQuery.of(context).size.width / 2 - 30,
       height: 38,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => JobTimeline1(
+                        screenValue: 1,
+                      )));
+        },
         style: ElevatedButton.styleFrom(
           elevation: 0,
           primary: Theme.of(context).primaryColor,

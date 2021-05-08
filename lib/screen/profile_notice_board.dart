@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pendu_driver/utils/utils.dart';
 
-class ProfileUpdate extends StatefulWidget {
+class ProfileNoticeBoard extends StatefulWidget {
   @override
-  _ProfileUpdateState createState() => _ProfileUpdateState();
+  _ProfileNoticeBoardState createState() => _ProfileNoticeBoardState();
 }
 
-class _ProfileUpdateState extends State<ProfileUpdate> {
+class _ProfileNoticeBoardState extends State<ProfileNoticeBoard> {
   Widget _buildNotice({String discription, date, time, colorCode}) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
@@ -51,7 +51,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(72),
-          child: CommonAppBar(appBarTitle: 'Updates'),
+          child: CommonAppBar(appBarTitle: 'Notice Board'),
         ),
         body: Container(
             color: Theme.of(context).primaryColor,
@@ -71,24 +71,30 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                       child:
                           SvgPicture.asset('assets/svg_icon/update_menu.svg')),
                   SizedBox(height: 25.0),
-                  _buildNotice(
-                      discription:
-                          "Lorem ipsum dolor sit amet, conse tetur sadipscing elitr….",
-                      date: "15.10.2020",
-                      time: "01.43 PM",
-                      colorCode: "29ABE2"),
-                  _buildNotice(
-                      discription:
-                          "Lorem ipsum dolor sit amet, conse tetur sadipscing elitr….",
-                      date: "15.10.2020",
-                      time: "01.43 PM",
-                      colorCode: "5BDB98"),
-                  _buildNotice(
-                      discription:
-                          "Lorem ipsum dolor sit amet, conse tetur sadipscing elitr….",
-                      date: "15.10.2020",
-                      time: "01.43 PM",
-                      colorCode: "FFCE8A"),
+                  Expanded(
+                    child: ListView(
+                      children: [
+                        _buildNotice(
+                            discription:
+                                "Lorem ipsum dolor sit amet, conse tetur sadipscing elitr….",
+                            date: "15.10.2020",
+                            time: "01.43 PM",
+                            colorCode: "29ABE2"),
+                        _buildNotice(
+                            discription:
+                                "Lorem ipsum dolor sit amet, conse tetur sadipscing elitr….",
+                            date: "15.10.2020",
+                            time: "01.43 PM",
+                            colorCode: "5BDB98"),
+                        _buildNotice(
+                            discription:
+                                "Lorem ipsum dolor sit amet, conse tetur sadipscing elitr….",
+                            date: "15.10.2020",
+                            time: "01.43 PM",
+                            colorCode: "FFCE8A"),
+                      ],
+                    ),
+                  )
                 ],
               ),
             )));

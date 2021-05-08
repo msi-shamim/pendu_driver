@@ -61,7 +61,10 @@ class _ShoppingBottomPopupState extends State<ShoppingBottomPopup> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => JobTimeline1()),
+            MaterialPageRoute(
+                builder: (context) => JobTimeline1(
+                      screenValue: 3,
+                    )),
           );
         },
         style: ElevatedButton.styleFrom(
@@ -84,77 +87,80 @@ class _ShoppingBottomPopupState extends State<ShoppingBottomPopup> {
   Widget build(BuildContext context) {
     double mWidth = MediaQuery.of(context).size.width;
     double mHeight = MediaQuery.of(context).size.height;
-    return Container(
-      height: mHeight * 0.66,
-      width: mWidth,
-      padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-          color: Colors.white),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Align(
-              alignment: Alignment.centerLeft,
-              child:
-                  Text('Confirm total', style: PenduTextStyle().headerStyle)),
-          Text('\$150.00',
-              style: TextStyle(fontSize: 26, color: Pendu.color('707070'))),
-          _buildConfirmButton(),
-          Divider(),
-          Align(
-              alignment: Alignment.centerLeft,
-              child:
-                  Text('Payment method', style: PenduTextStyle().headerStyle)),
-          _buildDebitCardButton(),
-          Divider(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Upload receipt', style: PenduTextStyle().headerStyle),
-              Container(
-                padding: EdgeInsets.all(2.0),
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle, color: Pendu.color('E8EEF5')),
-                child: Icon(
-                  Icons.arrow_upward_rounded,
-                  color: Theme.of(context).accentColor,
+    return SingleChildScrollView(
+      child: Container(
+        height: mHeight * 0.66,
+        width: mWidth,
+        padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+            color: Colors.white),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Align(
+                alignment: Alignment.centerLeft,
+                child:
+                    Text('Confirm total', style: PenduTextStyle().headerStyle)),
+            Text('\$150.00',
+                style: TextStyle(fontSize: 26, color: Pendu.color('707070'))),
+            _buildConfirmButton(),
+            Divider(),
+            Align(
+                alignment: Alignment.centerLeft,
+                child: Text('Payment method',
+                    style: PenduTextStyle().headerStyle)),
+            _buildDebitCardButton(),
+            Divider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Upload receipt', style: PenduTextStyle().headerStyle),
+                Container(
+                  padding: EdgeInsets.all(2.0),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, color: Pendu.color('E8EEF5')),
+                  child: Icon(
+                    Icons.arrow_upward_rounded,
+                    color: Theme.of(context).accentColor,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Receipt added',
-                  style: TextStyle(
-                      fontSize: 12, color: Theme.of(context).accentColor)),
-              Wrap(
-                children: [
-                  SvgPicture.asset('assets/svg_icon/file_icon.svg'),
-                  Container(
-                      padding: EdgeInsets.symmetric(horizontal: 2.0),
-                      child: Text(
-                        'DSC 651654.jpeg',
-                        style: TextStyle(color: Colors.black54, fontSize: 13),
-                      )),
-                ],
-              ),
-            ],
-          ),
-          _buildPaymentButton(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.flag_outlined, color: Pendu.color('90A0B2')),
-              SizedBox(width: 10),
-              Text('Report a problem',
-                  style: TextStyle(color: Pendu.color('90A0B2'), fontSize: 13))
-            ],
-          )
-        ],
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Receipt added',
+                    style: TextStyle(
+                        fontSize: 12, color: Theme.of(context).accentColor)),
+                Wrap(
+                  children: [
+                    SvgPicture.asset('assets/svg_icon/file_icon.svg'),
+                    Container(
+                        padding: EdgeInsets.symmetric(horizontal: 2.0),
+                        child: Text(
+                          'DSC 651654.jpeg',
+                          style: TextStyle(color: Colors.black54, fontSize: 13),
+                        )),
+                  ],
+                ),
+              ],
+            ),
+            _buildPaymentButton(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.flag_outlined, color: Pendu.color('90A0B2')),
+                SizedBox(width: 10),
+                Text('Report a problem',
+                    style:
+                        TextStyle(color: Pendu.color('90A0B2'), fontSize: 13))
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

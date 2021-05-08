@@ -101,7 +101,14 @@ class _ProfilePaymentCardState extends State<ProfilePaymentCard> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _buildCard(),
+                  Expanded(
+                    child: ListView(
+                      children: [
+                        _buildCard(),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 10),
                   _buildButton(),
                 ],
               ),

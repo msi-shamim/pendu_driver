@@ -10,3 +10,5 @@ export 'package:pendu_driver/utils/confirm_delivery_popup.dart';
 export 'package:pendu_driver/utils/image_picker.dart';
 export 'package:pendu_driver/utils/graph.dart';
 export 'package:pendu_driver/utils/line_titles.dart';
+export 'package:pendu_driver/utils/bottom_navbar.dart';
+export 'package:pendu_driver/utils/pendu_icon.dart';

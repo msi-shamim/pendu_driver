@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pendu_driver/screen/screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
 
 class NoticeBoard extends StatefulWidget {
@@ -50,7 +51,10 @@ class _NoticeBoardState extends State<NoticeBoard> {
       width: MediaQuery.of(context).size.width / 2,
       height: 40,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => ProfileNoticeBoard()));
+        },
         style: ElevatedButton.styleFrom(
           elevation: 0,
           primary: Theme.of(context).primaryColor,

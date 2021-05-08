@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pendu_driver/utils/utils.dart';
 
 import 'active_job.dart';
 import 'driver_rating.dart';
@@ -18,6 +19,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomNavigation(initValue: "Home"),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(

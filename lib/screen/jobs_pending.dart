@@ -35,17 +35,24 @@ class _JobsPendingState extends State<JobsPending> {
           ),
           height: 200,
           // width: 200,
-          child: Card(
-            elevation: 3.0,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                JobTaskCard(),
-                Spacer(),
-                _buildButton(),
-                SizedBox(height: 2.0)
-              ],
-            ),
+          child: Column(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Card(
+                  elevation: 3.0,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      JobTaskCard(),
+                      Spacer(),
+                      _buildButton(),
+                      SizedBox(height: 2.0)
+                    ],
+                  ),
+                ),
+              ),
+            ],
           )),
     );
   }

@@ -24,6 +24,7 @@ class _JobsViewState extends State<JobsView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        bottomNavigationBar: BottomNavigation(initValue: "Jobs"),
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(72),
           child: CommonAppBar(appBarTitle: 'Jobs'),
