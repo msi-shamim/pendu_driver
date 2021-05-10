@@ -154,9 +154,17 @@ class _ShoppingBottomPopupState extends State<ShoppingBottomPopup> {
               children: [
                 Icon(Icons.flag_outlined, color: Pendu.color('90A0B2')),
                 SizedBox(width: 10),
-                Text('Report a problem',
-                    style:
-                        TextStyle(color: Pendu.color('90A0B2'), fontSize: 13))
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ReportProblem()));
+                  },
+                  child: Text('Report a problem',
+                      style: TextStyle(
+                          color: Pendu.color('90A0B2'), fontSize: 13)),
+                )
               ],
             )
           ],

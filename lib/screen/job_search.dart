@@ -195,9 +195,17 @@ class _JobSearchState extends State<JobSearch> {
                       Icons.flag_outlined,
                       color: Colors.white,
                     ),
-                    Text(
-                      'Report',
-                      style: TextStyle(color: Colors.white),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ReportProblem()));
+                      },
+                      child: Text(
+                        'Report',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     )
                   ],
                 ),

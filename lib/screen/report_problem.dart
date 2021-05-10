@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pendu_driver/utils/utils.dart';
 
-class ProfileReportProblem extends StatefulWidget {
+class ReportProblem extends StatefulWidget {
   @override
-  _ProfileReportProblemState createState() => _ProfileReportProblemState();
+  _ReportProblemState createState() => _ReportProblemState();
 }
 
-class _ProfileReportProblemState extends State<ProfileReportProblem> {
+class _ReportProblemState extends State<ReportProblem> {
   Widget _buildTitleTextField() {
     return TextFormField(
       maxLines: 1,

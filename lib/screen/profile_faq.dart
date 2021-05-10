@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pendu_driver/screen/screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
 
 class ProfileFAQ extends StatefulWidget {
@@ -232,6 +233,44 @@ class _ProfileFAQState extends State<ProfileFAQ> {
     );
   }
 
+  Widget _buildChatButton() {
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 10.0),
+          child: Text(
+            'Still need help?',
+            style: TextStyle(fontStyle: FontStyle.italic, fontSize: 16),
+          ),
+        ),
+        SizedBox(
+          width: MediaQuery.of(context).size.width * .90,
+          height: 45,
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ProfileChatSupport()));
+            },
+            style: ElevatedButton.styleFrom(
+              elevation: 0,
+              primary: Theme.of(context).primaryColor,
+              onPrimary: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              // side: BorderSide(
+              //   color: Pendu.color('90A0B2'),
+              // ),
+            ),
+            child: Text('Chat support'),
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -250,14 +289,19 @@ class _ProfileFAQState extends State<ProfileFAQ> {
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20)),
                   color: Colors.white),
-              child: Expanded(
-                child: ListView(
-                  children: [
-                    _buildOrderFaq(),
-                    _buildPaymentFaq(),
-                    _buildWithdrawFaq(),
-                  ],
-                ),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ListView(
+                      children: [
+                        _buildOrderFaq(),
+                        _buildPaymentFaq(),
+                        _buildWithdrawFaq(),
+                      ],
+                    ),
+                  ),
+                  _buildChatButton(),
+                ],
               ),
             )));
   }

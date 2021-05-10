@@ -20,7 +20,7 @@ export 'package:pendu_driver/screen/profile_payment_card.dart';
 export 'package:pendu_driver/screen/profile_bank_details.dart';
 export 'package:pendu_driver/screen/profile_chat_support.dart';
 export 'package:pendu_driver/screen/profile_faq.dart';
-export 'package:pendu_driver/screen/profile_report_problem.dart';
+export 'package:pendu_driver/screen/report_problem.dart';
 export 'package:pendu_driver/screen/profile_notification.dart';
 
 export 'package:pendu_driver/utils/data.dart';
