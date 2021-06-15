@@ -275,7 +275,7 @@ class _ProfileState extends State<Profile> {
     }
 
     double _height = MediaQuery.of(context).size.height;
-    double _width = MediaQuery.of(context).size.width;
+    //double _width = MediaQuery.of(context).size.width;
 
     return MaterialApp(
       theme: Pendu.lightTheme,

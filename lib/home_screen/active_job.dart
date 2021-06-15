@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+
 import 'package:pendu_driver/screen/screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
 

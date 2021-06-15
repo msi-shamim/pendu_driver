@@ -3,6 +3,7 @@ import 'package:pendu_driver/screen/screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
 import 'package:timelines/timelines.dart';
 
+// ignore: must_be_immutable
 class TimeLine extends StatefulWidget {
   int screenValue = 0;
   TimeLine({this.screenValue});

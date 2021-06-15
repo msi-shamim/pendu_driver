@@ -32,10 +32,10 @@ List<ProfileInfoModel> profileInfoList = [
 ];
 
 class AllDAata extends StatelessWidget {
-  String profileUrl =
+  final String profileUrl =
       'https://cultivatedculture.com/wp-content/uploads/2019/12/LinkedIn-Profile-Picture-Example-Madeline-Mann.jpeg';
 
-  String profileName = " Jonathan Doe";
+  final String profileName = " Jonathan Doe";
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class ChatMessage {
   final bool isSender;
 
   ChatMessage({
-    this.text,
+    @required this.text,
     @required this.isText,
     @required this.messageDate,
     @required this.messageTime,

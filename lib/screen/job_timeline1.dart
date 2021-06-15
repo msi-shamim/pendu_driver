@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pendu_driver/screen/screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
 
+// ignore: must_be_immutable
 class JobTimeline1 extends StatefulWidget {
   int screenValue = 1;
   JobTimeline1({this.screenValue});

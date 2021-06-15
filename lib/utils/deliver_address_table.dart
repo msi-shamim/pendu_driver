@@ -6,7 +6,7 @@ class DeliverAddressTable extends StatelessWidget {
   final TextStyle defineTextSTyle;
   final double lineHight;
   DeliverAddressTable({this.defineTextSTyle, this.lineHight});
-  TextStyle addressTextStyle =
+  final TextStyle addressTextStyle =
       TextStyle(color: Pendu.color('90A0B2'), fontSize: 10);
   @override
   Widget build(BuildContext context) {

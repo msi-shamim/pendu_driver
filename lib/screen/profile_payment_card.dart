@@ -13,7 +13,9 @@ class _ProfilePaymentCardState extends State<ProfilePaymentCard> {
       width: MediaQuery.of(context).size.width - 40,
       height: 45,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          _buildAddCardForm();
+        },
         style: ElevatedButton.styleFrom(
           elevation: 0,
           primary: Theme.of(context).primaryColor,
@@ -21,9 +23,6 @@ class _ProfilePaymentCardState extends State<ProfilePaymentCard> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5.0),
           ),
-          // side: BorderSide(
-          //   color: Pendu.color('90A0B2'),
-          // ),
         ),
         child: Text('Update card'),
       ),
@@ -78,6 +77,100 @@ class _ProfilePaymentCardState extends State<ProfilePaymentCard> {
         ],
       ),
     );
+  }
+
+  Widget _buildAddCardTextField(
+      {String title, String hintText, bool isObsecure}) {
+    return Wrap(
+      crossAxisAlignment: WrapCrossAlignment.start,
+      children: [
+        Text(
+          title,
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 10.0),
+          height: 40,
+          decoration: BoxDecoration(
+              color: Colors.grey[100],
+              borderRadius: BorderRadius.circular(8.0)),
+          child: TextFormField(
+            obscureText: isObsecure,
+            decoration: InputDecoration(
+              hintText: hintText,
+              hintMaxLines: 1,
+              isCollapsed: true,
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              border: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              errorBorder: InputBorder.none,
+              disabledBorder: InputBorder.none,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildUpdateButton() {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width - 50,
+      height: 50,
+      child: ElevatedButton(
+        onPressed: () {
+          // _buildAddCardForm();
+        },
+        style: ElevatedButton.styleFrom(
+          elevation: 0,
+          primary: Theme.of(context).primaryColor,
+          onPrimary: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+        ),
+        child: Text(
+          'Update',
+          style: TextStyle(color: Colors.white, fontSize: 15),
+        ),
+      ),
+    );
+  }
+
+  _buildAddCardForm() {
+    return showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+              height: MediaQuery.of(context).size.height * 0.60,
+              padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 30.0),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20.0),
+                      topRight: Radius.circular(20.0))),
+              child: ListView(
+                children: [
+                  _buildAddCardTextField(
+                      title: 'Name on Card',
+                      hintText: 'John',
+                      isObsecure: false),
+                  _buildAddCardTextField(
+                      title: 'Card #',
+                      hintText: 'Enter Your Card Number',
+                      isObsecure: false),
+                  _buildAddCardTextField(
+                      title: 'Expiry', hintText: 'MM-YY', isObsecure: false),
+                  _buildAddCardTextField(
+                      title: 'CVV', hintText: '***', isObsecure: true),
+                  SizedBox(height: 5.0),
+                  _buildUpdateButton()
+                ],
+              ));
+        });
   }
 
   @override

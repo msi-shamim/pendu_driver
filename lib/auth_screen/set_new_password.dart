@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-
 import 'package:pendu_driver/auth_screen/auth_screen.dart';
-import 'package:pendu_driver/screen/screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
 
-class LogIn extends StatefulWidget {
+class SetNewPassword extends StatefulWidget {
   @override
-  _LogInState createState() => _LogInState();
+  _SetNewPasswordState createState() => _SetNewPasswordState();
 }
 
-class _LogInState extends State<LogIn> {
+class _SetNewPasswordState extends State<SetNewPassword> {
   @override
   Widget build(BuildContext context) {
     double _height = MediaQuery.of(context).size.height;
@@ -32,7 +30,7 @@ class _LogInState extends State<LogIn> {
               SizedBox(height: 30),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
-                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
+                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30.0),
                 height: _height / 2,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
@@ -41,45 +39,33 @@ class _LogInState extends State<LogIn> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(
-                      'Login/Register',
-                      style: PenduTextStyle().headerStyle,
+                    //   SizedBox(height: 50),
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      direction: Axis.vertical,
+                      spacing: 5.0,
+                      children: [
+                        Text(
+                          'Reset Password',
+                          style: PenduTextStyle().headerStyle,
+                        ),
+                        Text(
+                          'Enter your new password',
+                          //   style: PenduTextStyle().headerStyle,
+                        ),
+                      ],
                     ),
-                    NormalTextFormField(textLabel: 'Email'),
                     PasswordTextFormField(textLabel: 'Pasword'),
-                    SizedBox(height: 10.0),
+                    PasswordTextFormField(textLabel: 'Confirm Password'),
                     AuthButton(
                         width: MediaQuery.of(context).size.width * 0.90,
                         hight: 45,
                         primaryColor: Theme.of(context).primaryColor,
-                        text: 'Login',
+                        text: 'Reset password',
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomePage()));
-                        }),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ResetPassword()));
-                        },
-                        child: Text(
-                          'Forget password?',
-                          style: PenduTextStyle().linkStyleStyle,
-                        )),
-                    AuthButton(
-                        width: MediaQuery.of(context).size.width * .70,
-                        hight: 48,
-                        primaryColor: Theme.of(context).accentColor,
-                        text: 'Register',
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RegisterPage()));
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => LogIn()));
                         }),
                   ],
                 ),
