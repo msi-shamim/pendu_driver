@@ -9,22 +9,29 @@ class ShoppingBottomPopup extends StatefulWidget {
 }
 
 class _ShoppingBottomPopupState extends State<ShoppingBottomPopup> {
+  bool isConfirm = false;
   Widget _buildConfirmButton() {
     return SizedBox(
       width: MediaQuery.of(context).size.width - 30,
       height: 45,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          setState(() {
+            isConfirm = true;
+          });
+        },
         style: ElevatedButton.styleFrom(
           elevation: 0,
-          primary: Theme.of(context).accentColor,
+          primary: (isConfirm)
+              ? Pendu.color('90A0B2')
+              : Theme.of(context).accentColor,
           onPrimary: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
         ),
         child: Text(
-          'Confirm total',
+          (isConfirm) ? 'Confirm total' : 'Confirmed',
           style: PenduTextStyle().btnStyle,
         ),
       ),
@@ -59,13 +66,15 @@ class _ShoppingBottomPopupState extends State<ShoppingBottomPopup> {
       height: 45,
       child: ElevatedButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => JobTimeline1(
-                      screenValue: 3,
-                    )),
-          );
+          (isConfirm)
+              ? Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => JobTimeline1(
+                            screenValue: 3,
+                          )),
+                )
+              : null;
         },
         style: ElevatedButton.styleFrom(
           elevation: 0,
