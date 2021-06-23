@@ -1,4 +1,5 @@
 import 'package:dotted_border/dotted_border.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pendu_driver/screen/screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
@@ -10,11 +11,48 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final _formKey = GlobalKey<FormState>();
+
+  bool _isLoading = false;
+
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final emailController = TextEditingController();
+  final contactController = TextEditingController();
+  final passController = TextEditingController();
+  final confirmPassController = TextEditingController();
+  final abnController = TextEditingController();
+  final vehicleTypeController = TextEditingController();
+  final categoryController = TextEditingController();
+
+  @override
+  void dispose() {
+    firstNameController.dispose();
+    lastNameController.dispose();
+    emailController.dispose();
+    contactController.dispose();
+    passController.dispose();
+    confirmPassController.dispose();
+    abnController..dispose();
+    vehicleTypeController.dispose();
+    categoryController..dispose();
+    super.dispose();
+  }
+
+  bool validatePassword(String pass) {
+    String pattern =
+        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+    RegExp regExp = new RegExp(pattern);
+    return regExp.hasMatch(pass);
+  }
+
   Widget _builtTextField({
     String title,
     String svgUrl,
     String hinText,
     bool isSufix = false,
+    TextEditingController controller,
+    Function validator,
   }) {
     return Column(
       children: [
@@ -36,6 +74,8 @@ class _RegisterPageState extends State<RegisterPage> {
           // decoration: BoxDecoration(borderRadius: BorderRadius.circular(8.0)),
           child: TextFormField(
             maxLines: 1,
+            controller: controller,
+            validator: validator,
             decoration: InputDecoration(
               hintText: hinText,
               filled: true,
@@ -207,6 +247,13 @@ class _RegisterPageState extends State<RegisterPage> {
                         title: 'First Name',
                         svgUrl: 'assets/svg_icon/profile.svg',
                         hinText: 'John',
+                        validator: (fName) {
+                          if (fName == null || fName.isEmpty) {
+                            return 'First Name is required';
+                          }
+                          return null;
+                        },
+                        controller: firstNameController,
                       ),
                     ),
                     SizedBox(width: 10.0),
@@ -215,6 +262,13 @@ class _RegisterPageState extends State<RegisterPage> {
                         title: 'Last Name',
                         svgUrl: 'assets/svg_icon/profile.svg',
                         hinText: 'Doe',
+                        validator: (lName) {
+                          if (lName == null || lName.isEmpty) {
+                            return 'Last Name is required';
+                          }
+                          return null;
+                        },
+                        controller: lastNameController,
                       ),
                     ),
                   ],
@@ -223,22 +277,63 @@ class _RegisterPageState extends State<RegisterPage> {
                   title: 'Email',
                   svgUrl: 'assets/svg_icon/mail.svg',
                   hinText: 'Enter your email',
+                  validator: (eMail) {
+                    if (eMail == null || eMail.isEmpty) {
+                      return 'Email Name is required';
+                    } else if (!EmailValidator.validate(eMail)) {
+                      return 'Invalid Email';
+                    }
+                    return null;
+                  },
+                  controller: emailController,
                 ),
                 _builtTextField(
                   title: 'Phone No',
                   svgUrl: 'assets/svg_icon/telephone.svg',
                   hinText: '+880',
+                  validator: (cnt) {
+                    if (cnt == null || cnt.isEmpty) {
+                      return 'Phone number is required';
+                    }
+                    if (cnt.length < 9) {
+                      return "Please enter valid phone";
+                    }
+                    return null;
+                  },
+                  controller: contactController,
                 ),
                 _builtTextField(
                   title: 'Password',
                   svgUrl: 'assets/svg_icon/unlock.svg',
                   hinText: '*** *** *** ***',
+                  validator: (pass) {
+                    if (pass == null || pass.isEmpty) {
+                      return 'Password is required';
+                    }
+                    if (pass.length < 8) {
+                      return "Password at least 8 character";
+                    }
+                    return null;
+                  },
+                  controller: passController,
                 ),
                 _builtTextField(
                   title: 'ABN',
                   svgUrl: 'assets/svg_icon/ABN.svg',
                   hinText: '*** *** *** ***',
+                  validator: (abn) {
+                    if (abn == null || abn.isEmpty) {
+                      return 'ABN number is required';
+                    }
+                    if (abn.length < 5) {
+                      return "Please enter valid ABN number";
+                    }
+                    return null;
+                  },
+                  controller: abnController,
                 ),
+
+                //!Need to work from here
                 _builtTextField(
                     title: 'Vehicle type',
                     svgUrl: 'assets/svg_icon/vehicle_type.svg',

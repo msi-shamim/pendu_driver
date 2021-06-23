@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:pendu_driver/auth_screen/auth_screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
@@ -8,6 +9,17 @@ class ResetPassword extends StatefulWidget {
 }
 
 class _ResetPasswordState extends State<ResetPassword> {
+  final _formKey = GlobalKey<FormState>();
+
+  final emailController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     double _height = MediaQuery.of(context).size.height;
@@ -56,17 +68,32 @@ class _ResetPasswordState extends State<ResetPassword> {
                         ),
                       ],
                     ),
-                    NormalTextFormField(textLabel: 'Email'),
+                    Form(
+                        key: _formKey,
+                        child: NormalTextFormField(
+                          textLabel: 'Email',
+                          validator: (eMail) {
+                            if (eMail == null || eMail.isEmpty) {
+                              return 'Email  is required';
+                            } else if (!EmailValidator.validate(eMail)) {
+                              return 'Invalid Email';
+                            }
+                            return null;
+                          },
+                          controller: emailController,
+                        )),
                     AuthButton(
                         width: MediaQuery.of(context).size.width * 0.90,
                         hight: 45,
                         primaryColor: Theme.of(context).primaryColor,
                         text: 'Reset password',
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => OtpPage()));
+                          if (_formKey.currentState.validate()) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => OtpPage()));
+                          }
                         }),
 
                     Text(

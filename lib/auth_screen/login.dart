@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
 import 'package:pendu_driver/auth_screen/auth_screen.dart';
@@ -10,6 +11,25 @@ class LogIn extends StatefulWidget {
 }
 
 class _LogInState extends State<LogIn> {
+  final _formKey = GlobalKey<FormState>();
+  bool checkValue = false;
+  final emailController = TextEditingController();
+  final passController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passController.dispose();
+    super.dispose();
+  }
+
+  bool validatePassword(String pass) {
+    String pattern =
+        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+    RegExp regExp = new RegExp(pattern);
+    return regExp.hasMatch(pass);
+  }
+
   @override
   Widget build(BuildContext context) {
     double _height = MediaQuery.of(context).size.height;
@@ -45,20 +65,49 @@ class _LogInState extends State<LogIn> {
                       'Login/Register',
                       style: PenduTextStyle().headerStyle,
                     ),
-                    NormalTextFormField(textLabel: 'Email'),
-                    PasswordTextFormField(textLabel: 'Pasword'),
-                    SizedBox(height: 10.0),
-                    AuthButton(
-                        width: MediaQuery.of(context).size.width * 0.90,
-                        hight: 45,
-                        primaryColor: Theme.of(context).primaryColor,
-                        text: 'Login',
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomePage()));
-                        }),
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          NormalTextFormField(
+                            textLabel: 'Email',
+                            validator: (eMail) {
+                              if (eMail == null || eMail.isEmpty) {
+                                return 'Email is required';
+                              } else if (!EmailValidator.validate(eMail)) {
+                                return 'Invalid Email';
+                              }
+                              return null;
+                            },
+                            controller: emailController,
+                          ),
+                          PasswordTextFormField(
+                            textLabel: 'Pasword',
+                            validator: (pass) {
+                              if (pass == null || pass.isEmpty) {
+                                return 'Password is required';
+                              }
+                              return null;
+                            },
+                            controller: passController,
+                          ),
+                          SizedBox(height: 10.0),
+                          AuthButton(
+                              width: MediaQuery.of(context).size.width * 0.90,
+                              hight: 45,
+                              primaryColor: Theme.of(context).primaryColor,
+                              text: 'Login',
+                              onPressed: () {
+                                if (_formKey.currentState.validate()) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => HomePage()));
+                                }
+                              }),
+                        ],
+                      ),
+                    ),
                     TextButton(
                         onPressed: () {
                           Navigator.push(

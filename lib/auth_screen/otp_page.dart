@@ -58,14 +58,14 @@ class _OtpPageState extends State<OtpPage> {
                     color: Colors.amber.shade600,
                     fontWeight: FontWeight.bold,
                   ),
-                  length: 5,
+                  length: 6,
                   obscureText: true,
                   //obscuringCharacter: '*',
 
                   blinkWhenObscuring: true,
                   animationType: AnimationType.fade,
                   validator: (v) {
-                    if (v.length < 5) {
+                    if (v.length < 6) {
                       fullFill = false;
 
                       return null;
@@ -78,8 +78,8 @@ class _OtpPageState extends State<OtpPage> {
                   pinTheme: PinTheme(
                     shape: PinCodeFieldShape.box,
                     borderRadius: BorderRadius.circular(5),
-                    fieldHeight: 50,
-                    fieldWidth: 50,
+                    fieldHeight: 40,
+                    fieldWidth: 40,
                     activeColor: Theme.of(context).accentColor,
                     selectedColor: Theme.of(context).primaryColor,
                     disabledColor: Colors.grey,
@@ -128,7 +128,8 @@ class _OtpPageState extends State<OtpPage> {
                 style: TextStyle(color: Colors.black54, fontSize: 15),
               ),
               TextButton(
-                  onPressed: () => snackBar("OTP resend to your mail!"),
+                  onPressed: () => SnackBarClass.snackBarMethod(
+                      message: "OTP resend to your Mail!", context: context),
                   child: Text(
                     "RESEND",
                     style: TextStyle(
@@ -166,7 +167,8 @@ class _OtpPageState extends State<OtpPage> {
                     );
                   }
                 } else {
-                  snackBar("Fill all the field");
+                  SnackBarClass.snackBarMethod(
+                      message: "Fill all the field", context: context);
                 }
               }),
         ],

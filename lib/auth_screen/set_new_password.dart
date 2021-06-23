@@ -8,6 +8,23 @@ class SetNewPassword extends StatefulWidget {
 }
 
 class _SetNewPasswordState extends State<SetNewPassword> {
+  final _formKey = GlobalKey<FormState>();
+  final passController = TextEditingController();
+  final confirmPassController = TextEditingController();
+  @override
+  void dispose() {
+    passController.dispose();
+    confirmPassController.dispose();
+    super.dispose();
+  }
+
+  bool validatePassword(String pass) {
+    String pattern =
+        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+    RegExp regExp = new RegExp(pattern);
+    return regExp.hasMatch(pass);
+  }
+
   @override
   Widget build(BuildContext context) {
     double _height = MediaQuery.of(context).size.height;
@@ -36,38 +53,67 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                   borderRadius: BorderRadius.circular(8.0),
                   color: Colors.white,
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    //   SizedBox(height: 50),
-                    Wrap(
-                      alignment: WrapAlignment.center,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      direction: Axis.vertical,
-                      spacing: 5.0,
-                      children: [
-                        Text(
-                          'Reset Password',
-                          style: PenduTextStyle().headerStyle,
-                        ),
-                        Text(
-                          'Enter your new password',
-                          //   style: PenduTextStyle().headerStyle,
-                        ),
-                      ],
-                    ),
-                    PasswordTextFormField(textLabel: 'Pasword'),
-                    PasswordTextFormField(textLabel: 'Confirm Password'),
-                    AuthButton(
-                        width: MediaQuery.of(context).size.width * 0.90,
-                        hight: 45,
-                        primaryColor: Theme.of(context).primaryColor,
-                        text: 'Reset password',
-                        onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => LogIn()));
-                        }),
-                  ],
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      //   SizedBox(height: 50),
+                      Wrap(
+                        alignment: WrapAlignment.center,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        direction: Axis.vertical,
+                        spacing: 5.0,
+                        children: [
+                          Text(
+                            'Reset Password',
+                            style: PenduTextStyle().headerStyle,
+                          ),
+                          Text(
+                            'Enter your new password',
+                            //   style: PenduTextStyle().headerStyle,
+                          ),
+                        ],
+                      ),
+                      PasswordTextFormField(
+                        textLabel: 'Pasword',
+                        validator: (pass) {
+                          if (pass == null || pass.isEmpty) {
+                            return 'Password is required';
+                          }
+                          return null;
+                        },
+                        controller: passController,
+                      ),
+                      PasswordTextFormField(
+                        textLabel: 'Confirm Password',
+                        validator: (passCon) {
+                          if (passCon == null || passCon.isEmpty) {
+                            return 'Confirm Password is required';
+                          }
+                          if (passController.text !=
+                              confirmPassController.text) {
+                            return "Password Do not match";
+                          }
+                          return null;
+                        },
+                        controller: confirmPassController,
+                      ),
+                      AuthButton(
+                          width: MediaQuery.of(context).size.width * 0.90,
+                          hight: 45,
+                          primaryColor: Theme.of(context).primaryColor,
+                          text: 'Reset password',
+                          onPressed: () {
+                            if (_formKey.currentState.validate()) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LogIn()));
+                            }
+                          }),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: 50),

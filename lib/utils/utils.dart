@@ -15,3 +15,4 @@ export 'package:pendu_driver/utils/auth_button.dart';
 export 'package:pendu_driver/utils/line_titles.dart';
 export 'package:pendu_driver/utils/bottom_navbar.dart';
 export 'package:pendu_driver/utils/pendu_icon.dart';
+export 'package:pendu_driver/utils/snackbar_page.dart';
