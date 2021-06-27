@@ -1,11 +1,11 @@
 // To parse this JSON data, do
 //
-//     final getDrpperProfileWithLevelModel = getDrpperProfileWithLevelModelFromMap(jsonString);
+//     final getDropperProfileModel = getDropperProfileModelFromMap(jsonString);
 
 import 'dart:convert';
 
-class GetDrpperProfileWithLevelModel {
-  GetDrpperProfileWithLevelModel({
+class ResponseDropperProfileModel {
+  ResponseDropperProfileModel({
     this.id,
     this.firstName,
     this.lastName,
@@ -47,13 +47,13 @@ class GetDrpperProfileWithLevelModel {
   final String fullName;
   final Level level;
 
-  factory GetDrpperProfileWithLevelModel.fromJson(String str) =>
-      GetDrpperProfileWithLevelModel.fromMap(json.decode(str));
+  factory ResponseDropperProfileModel.fromJson(String str) =>
+      ResponseDropperProfileModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory GetDrpperProfileWithLevelModel.fromMap(Map<String, dynamic> json) =>
-      GetDrpperProfileWithLevelModel(
+  factory ResponseDropperProfileModel.fromMap(Map<String, dynamic> json) =>
+      ResponseDropperProfileModel(
         id: json["id"] == null ? null : json["id"],
         firstName: json["first_name"] == null ? null : json["first_name"],
         lastName: json["last_name"] == null ? null : json["last_name"],

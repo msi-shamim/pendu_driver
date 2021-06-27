@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pendu_driver/home_screen/home_page.dart';
+import 'package:pendu_driver/screen/screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
 import 'package:rating_bar/rating_bar.dart';
 

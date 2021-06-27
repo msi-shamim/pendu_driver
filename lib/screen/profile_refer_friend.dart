@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pendu_driver/home_screen/invite_friend.dart';
+import 'package:pendu_driver/screen/home_screen/invite_friend.dart';
 import 'package:pendu_driver/utils/utils.dart';
 
 class ProfileReferFriend extends StatefulWidget {

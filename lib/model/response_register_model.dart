@@ -4,8 +4,8 @@
 
 import 'dart:convert';
 
-class PostDroperRegisterModel {
-  PostDroperRegisterModel({
+class ResponseDroperRegisterModel {
+  ResponseDroperRegisterModel({
     this.status,
     this.message,
     this.data,
@@ -15,13 +15,13 @@ class PostDroperRegisterModel {
   final String message;
   final Data data;
 
-  factory PostDroperRegisterModel.fromJson(String str) =>
-      PostDroperRegisterModel.fromMap(json.decode(str));
+  factory ResponseDroperRegisterModel.fromJson(String str) =>
+      ResponseDroperRegisterModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory PostDroperRegisterModel.fromMap(Map<String, dynamic> json) =>
-      PostDroperRegisterModel(
+  factory ResponseDroperRegisterModel.fromMap(Map<String, dynamic> json) =>
+      ResponseDroperRegisterModel(
         status: json["status"] == null ? null : json["status"],
         message: json["message"] == null ? null : json["message"],
         data: json["data"] == null ? null : Data.fromMap(json["data"]),

@@ -1,7 +1,8 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
-import 'package:pendu_driver/auth_screen/auth_screen.dart';
+import 'package:pendu_driver/screen/auth_screen/auth_screen.dart';
+import 'package:pendu_driver/screen/home_screen/home_page.dart';
 import 'package:pendu_driver/screen/screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
 

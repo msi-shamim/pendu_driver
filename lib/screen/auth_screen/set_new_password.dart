@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pendu_driver/auth_screen/auth_screen.dart';
+import 'package:pendu_driver/screen/auth_screen/auth_screen.dart';
+
 import 'package:pendu_driver/utils/utils.dart';
 
 class SetNewPassword extends StatefulWidget {
