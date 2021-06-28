@@ -4,12 +4,12 @@ class ResponseVehiclesDataModel {
   ResponseVehiclesDataModel({
     this.status,
     this.message,
-    this.data,
+    this.vehiclesList,
   });
 
   final int status;
   final String message;
-  final List<Datum> data;
+  final List<VehiclesList> vehiclesList;
 
   factory ResponseVehiclesDataModel.fromJson(String str) =>
       ResponseVehiclesDataModel.fromMap(json.decode(str));
@@ -20,22 +20,23 @@ class ResponseVehiclesDataModel {
       ResponseVehiclesDataModel(
         status: json["status"] == null ? null : json["status"],
         message: json["message"] == null ? null : json["message"],
-        data: json["data"] == null
+        vehiclesList: json["data"] == null
             ? null
-            : List<Datum>.from(json["data"].map((x) => Datum.fromMap(x))),
+            : List<VehiclesList>.from(
+                json["data"].map((x) => VehiclesList.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
         "status": status == null ? null : status,
         "message": message == null ? null : message,
-        "data": data == null
+        "data": vehiclesList == null
             ? null
-            : List<dynamic>.from(data.map((x) => x.toMap())),
+            : List<dynamic>.from(vehiclesList.map((x) => x.toMap())),
       };
 }
 
-class Datum {
-  Datum({
+class VehiclesList {
+  VehiclesList({
     this.id,
     this.title,
     this.icon,
@@ -51,11 +52,12 @@ class Datum {
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  factory Datum.fromJson(String str) => Datum.fromMap(json.decode(str));
+  factory VehiclesList.fromJson(String str) =>
+      VehiclesList.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory Datum.fromMap(Map<String, dynamic> json) => Datum(
+  factory VehiclesList.fromMap(Map<String, dynamic> json) => VehiclesList(
         id: json["id"] == null ? null : json["id"],
         title: json["title"] == null ? null : json["title"],
         icon: json["icon"] == null ? null : json["icon"],

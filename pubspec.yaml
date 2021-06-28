@@ -33,7 +33,7 @@ dependencies:
   flutter_sparkline: ^0.1.0
   flutter_svg: ^0.21.0-nullsafety.0
   flutter_switch: ^0.3.1
-  image_picker: ^0.7.4
+  image_picker: ^0.8.1+1
   motion_tab_bar: ^0.1.5
   percent_indicator: ^3.0.1
   rating_bar: ^0.2.0
@@ -46,7 +46,7 @@ dependencies:
   intl:
   pin_code_fields: ^7.2.0
   ff_navigation_bar: ^0.1.5
-
+  multi_select_flutter: ^4.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

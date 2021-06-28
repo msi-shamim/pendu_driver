@@ -1,46 +1,41 @@
 // To parse this JSON data, do
 //
-//     final postLoginDropperModel = postLoginDropperModelFromMap(jsonString);
+//     final putDroperUpdateModel = putDroperUpdateModelFromMap(jsonString);
 
 import 'dart:convert';
 
-class PostLoginDropperModel {
-  PostLoginDropperModel({
-    this.accessToken,
-    this.tokenType,
-    this.expiresIn,
-    this.dropper,
+class PutDroperUpdateModel {
+  PutDroperUpdateModel({
+    this.status,
+    this.message,
+    this.data,
   });
 
-  final String accessToken;
-  final String tokenType;
-  final int expiresIn;
-  final Dropper dropper;
+  final int status;
+  final String message;
+  final Droper data;
 
-  factory PostLoginDropperModel.fromJson(String str) =>
-      PostLoginDropperModel.fromMap(json.decode(str));
+  factory PutDroperUpdateModel.fromJson(String str) =>
+      PutDroperUpdateModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory PostLoginDropperModel.fromMap(Map<String, dynamic> json) =>
-      PostLoginDropperModel(
-        accessToken: json["access_token"] == null ? null : json["access_token"],
-        tokenType: json["token_type"] == null ? null : json["token_type"],
-        expiresIn: json["expires_in"] == null ? null : json["expires_in"],
-        dropper:
-            json["dropper"] == null ? null : Dropper.fromMap(json["dropper"]),
+  factory PutDroperUpdateModel.fromMap(Map<String, dynamic> json) =>
+      PutDroperUpdateModel(
+        status: json["status"] == null ? null : json["status"],
+        message: json["message"] == null ? null : json["message"],
+        data: json["data"] == null ? null : Droper.fromMap(json["data"]),
       );
 
   Map<String, dynamic> toMap() => {
-        "access_token": accessToken == null ? null : accessToken,
-        "token_type": tokenType == null ? null : tokenType,
-        "expires_in": expiresIn == null ? null : expiresIn,
-        "dropper": dropper == null ? null : dropper.toMap(),
+        "status": status == null ? null : status,
+        "message": message == null ? null : message,
+        "data": data == null ? null : data.toMap(),
       };
 }
 
-class Dropper {
-  Dropper({
+class Droper {
+  Droper({
     this.id,
     this.firstName,
     this.lastName,
@@ -80,11 +75,11 @@ class Dropper {
   final DateTime updatedAt;
   final String fullName;
 
-  factory Dropper.fromJson(String str) => Dropper.fromMap(json.decode(str));
+  factory Droper.fromJson(String str) => Droper.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory Dropper.fromMap(Map<String, dynamic> json) => Dropper(
+  factory Droper.fromMap(Map<String, dynamic> json) => Droper(
         id: json["id"] == null ? null : json["id"],
         firstName: json["first_name"] == null ? null : json["first_name"],
         lastName: json["last_name"] == null ? null : json["last_name"],

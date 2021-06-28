@@ -4,12 +4,12 @@ class ResponseProductCategoryModel {
   ResponseProductCategoryModel({
     this.status,
     this.message,
-    this.data,
+    this.productCategoryList,
   });
 
   final int status;
   final String message;
-  final List<Datum> data;
+  final List<ProductCategoryList> productCategoryList;
 
   factory ResponseProductCategoryModel.fromJson(String str) =>
       ResponseProductCategoryModel.fromMap(json.decode(str));
@@ -20,22 +20,23 @@ class ResponseProductCategoryModel {
       ResponseProductCategoryModel(
         status: json["status"] == null ? null : json["status"],
         message: json["message"] == null ? null : json["message"],
-        data: json["data"] == null
+        productCategoryList: json["data"] == null
             ? null
-            : List<Datum>.from(json["data"].map((x) => Datum.fromMap(x))),
+            : List<ProductCategoryList>.from(
+                json["data"].map((x) => ProductCategoryList.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
         "status": status == null ? null : status,
         "message": message == null ? null : message,
-        "data": data == null
+        "data": productCategoryList == null
             ? null
-            : List<dynamic>.from(data.map((x) => x.toMap())),
+            : List<dynamic>.from(productCategoryList.map((x) => x.toMap())),
       };
 }
 
-class Datum {
-  Datum({
+class ProductCategoryList {
+  ProductCategoryList({
     this.id,
     this.title,
     this.slug,
@@ -51,11 +52,13 @@ class Datum {
   final dynamic createdAt;
   final dynamic updatedAt;
 
-  factory Datum.fromJson(String str) => Datum.fromMap(json.decode(str));
+  factory ProductCategoryList.fromJson(String str) =>
+      ProductCategoryList.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory Datum.fromMap(Map<String, dynamic> json) => Datum(
+  factory ProductCategoryList.fromMap(Map<String, dynamic> json) =>
+      ProductCategoryList(
         id: json["id"] == null ? null : json["id"],
         title: json["title"] == null ? null : json["title"],
         slug: json["slug"] == null ? null : json["slug"],

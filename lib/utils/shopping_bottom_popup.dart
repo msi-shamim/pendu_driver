@@ -74,6 +74,7 @@ class _ShoppingBottomPopupState extends State<ShoppingBottomPopup> {
                             screenValue: 3,
                           )),
                 )
+              // ignore: unnecessary_statements
               : null;
         },
         style: ElevatedButton.styleFrom(

@@ -4,12 +4,12 @@ class ResponseCouponDataModel {
   ResponseCouponDataModel({
     this.status,
     this.message,
-    this.data,
+    this.couponList,
   });
 
   final int status;
   final String message;
-  final List<Datum> data;
+  final List<CouponList> couponList;
 
   factory ResponseCouponDataModel.fromJson(String str) =>
       ResponseCouponDataModel.fromMap(json.decode(str));
@@ -20,22 +20,23 @@ class ResponseCouponDataModel {
       ResponseCouponDataModel(
         status: json["status"] == null ? null : json["status"],
         message: json["message"] == null ? null : json["message"],
-        data: json["data"] == null
+        couponList: json["data"] == null
             ? null
-            : List<Datum>.from(json["data"].map((x) => Datum.fromMap(x))),
+            : List<CouponList>.from(
+                json["data"].map((x) => CouponList.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
         "status": status == null ? null : status,
         "message": message == null ? null : message,
-        "data": data == null
+        "data": couponList == null
             ? null
-            : List<dynamic>.from(data.map((x) => x.toMap())),
+            : List<dynamic>.from(couponList.map((x) => x.toMap())),
       };
 }
 
-class Datum {
-  Datum({
+class CouponList {
+  CouponList({
     this.id,
     this.title,
     this.promoCode,
@@ -63,11 +64,12 @@ class Datum {
   final String validRange;
   final String validRangeYear;
 
-  factory Datum.fromJson(String str) => Datum.fromMap(json.decode(str));
+  factory CouponList.fromJson(String str) =>
+      CouponList.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory Datum.fromMap(Map<String, dynamic> json) => Datum(
+  factory CouponList.fromMap(Map<String, dynamic> json) => CouponList(
         id: json["id"] == null ? null : json["id"],
         title: json["title"] == null ? null : json["title"],
         promoCode: json["promo_code"] == null ? null : json["promo_code"],

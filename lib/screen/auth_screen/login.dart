@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:pendu_driver/api/call_api.dart';
 
 import 'package:pendu_driver/screen/auth_screen/auth_screen.dart';
 import 'package:pendu_driver/screen/home_screen/home_page.dart';
@@ -54,7 +55,7 @@ class _LogInState extends State<LogIn> {
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
-                height: _height / 2,
+                height: _height * 0.52,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
                   color: Colors.white,
@@ -82,6 +83,7 @@ class _LogInState extends State<LogIn> {
                             },
                             controller: emailController,
                           ),
+                          SizedBox(height: 10.0),
                           PasswordTextFormField(
                             textLabel: 'Pasword',
                             validator: (pass) {
@@ -100,10 +102,7 @@ class _LogInState extends State<LogIn> {
                               text: 'Login',
                               onPressed: () {
                                 if (_formKey.currentState.validate()) {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => HomePage()));
+                                  _logInMethod();
                                 }
                               }),
                         ],
@@ -140,5 +139,10 @@ class _LogInState extends State<LogIn> {
         ),
       ),
     );
+  }
+
+  void _logInMethod() {
+    var callLoginApi = CallApi(context);
+    callLoginApi.callLoginApi(emailController.text, passController.text);
   }
 }

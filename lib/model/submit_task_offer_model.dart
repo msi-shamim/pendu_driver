@@ -8,12 +8,12 @@ class PostSubmitTaskOfferModel {
   PostSubmitTaskOfferModel({
     this.status,
     this.message,
-    this.data,
+    this.taskOffersList,
   });
 
   final int status;
   final String message;
-  final Data data;
+  final TaskOffersList taskOffersList;
 
   factory PostSubmitTaskOfferModel.fromJson(String str) =>
       PostSubmitTaskOfferModel.fromMap(json.decode(str));
@@ -24,18 +24,19 @@ class PostSubmitTaskOfferModel {
       PostSubmitTaskOfferModel(
         status: json["status"] == null ? null : json["status"],
         message: json["message"] == null ? null : json["message"],
-        data: json["data"] == null ? null : Data.fromMap(json["data"]),
+        taskOffersList:
+            json["data"] == null ? null : TaskOffersList.fromMap(json["data"]),
       );
 
   Map<String, dynamic> toMap() => {
         "status": status == null ? null : status,
         "message": message == null ? null : message,
-        "data": data == null ? null : data.toMap(),
+        "data": taskOffersList == null ? null : taskOffersList.toMap(),
       };
 }
 
-class Data {
-  Data({
+class TaskOffersList {
+  TaskOffersList({
     this.id,
     this.amount,
     this.taskId,
@@ -55,11 +56,12 @@ class Data {
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  factory Data.fromJson(String str) => Data.fromMap(json.decode(str));
+  factory TaskOffersList.fromJson(String str) =>
+      TaskOffersList.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory Data.fromMap(Map<String, dynamic> json) => Data(
+  factory TaskOffersList.fromMap(Map<String, dynamic> json) => TaskOffersList(
         id: json["id"] == null ? null : json["id"],
         amount: json["amount"] == null ? null : json["amount"],
         taskId: json["task_id"] == null ? null : json["task_id"],

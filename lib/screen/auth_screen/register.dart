@@ -1,6 +1,12 @@
+import 'dart:io';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
+import 'package:pendu_driver/api/call_api.dart';
+import 'package:pendu_driver/model/model.dart';
 import 'package:pendu_driver/screen/home_screen/home_page.dart';
 import 'package:pendu_driver/screen/screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
@@ -11,10 +17,65 @@ class RegisterPage extends StatefulWidget {
   _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
-  final _formKey = GlobalKey<FormState>();
+class ServiceCategory {
+  final int id;
+  final String name;
 
-  bool _isLoading = false;
+  ServiceCategory({
+    this.id,
+    this.name,
+  });
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  static List<ServiceCategory> _sCategory = [
+    ServiceCategory(id: 1, name: "Shop & Drop"),
+    ServiceCategory(id: 2, name: "Collect & Drop"),
+    ServiceCategory(id: 3, name: "Movers"),
+  ];
+  final _items = _sCategory
+      .map((service) => MultiSelectItem<ServiceCategory>(service, service.name))
+      .toList();
+  List<ServiceCategory> _selectedService = [];
+
+  void _showCategoriesMultiSelect(BuildContext context) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (ctx) {
+        return MultiSelectBottomSheet(
+          title: Text('Select Categories',
+              style: TextStyle(color: Colors.black, fontSize: 16)),
+          items: _items,
+          initialValue: _selectedService,
+          selectedColor: Theme.of(context).accentColor,
+          checkColor: Colors.white,
+          maxChildSize: 0.8,
+          initialChildSize: 0.4,
+          confirmText: Text('Confirm',
+              style: TextStyle(
+                color: Theme.of(context).accentColor,
+              )),
+          cancelText: Text('Cancel',
+              style: TextStyle(
+                color: Colors.red,
+              )),
+          onConfirm: (values) {
+            setState(() {
+              _selectedService = values;
+            });
+          },
+        );
+      },
+    );
+    print('Selceted Service: $_selectedService');
+  }
+
+  final _formKey = GlobalKey<FormState>();
+  final picker = ImagePicker();
+  File _dLFont, _dLBack, _profileImg;
+  int vehicleId;
+  List<int> serviceIdList = [];
 
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
@@ -47,6 +108,98 @@ class _RegisterPageState extends State<RegisterPage> {
     return regExp.hasMatch(pass);
   }
 
+  Widget _buildVehicleType() {
+    return Column(
+      children: [
+        Row(
+          children: [
+            SvgPicture.asset(
+              'assets/svg_icon/vehicle_type.svg',
+              height: 14,
+              width: 14,
+              color: Pendu.color('1B3149'),
+            ),
+            SizedBox(width: 5.0),
+            Text('Vehicle type'),
+          ],
+        ),
+        SizedBox(height: 10.0),
+        Container(
+            height: 40,
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            decoration: BoxDecoration(
+              color: Pendu.color('F9F9F9'),
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Select your vehicle',
+                  style: TextStyle(fontSize: 16, color: Colors.black54),
+                ),
+                InkWell(
+                  onTap: () {
+                    _showCategoriesMultiSelect(context);
+                  },
+                  child: Icon(
+                    Icons.unfold_more_rounded,
+                    color: Pendu.color('90A0B2'),
+                  ),
+                ),
+              ],
+            )),
+        SizedBox(height: 10),
+      ],
+    );
+  }
+
+  Widget _buildCategoryType() {
+    return Column(
+      children: [
+        Row(
+          children: [
+            SvgPicture.asset(
+              'assets/svg_icon/category.svg',
+              height: 14,
+              width: 14,
+              color: Pendu.color('1B3149'),
+            ),
+            SizedBox(width: 5.0),
+            Text('Please select  category'),
+          ],
+        ),
+        SizedBox(height: 10.0),
+        Container(
+            height: 40,
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            decoration: BoxDecoration(
+              color: Pendu.color('F9F9F9'),
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Select your category',
+                  style: TextStyle(fontSize: 16, color: Colors.black54),
+                ),
+                InkWell(
+                  onTap: () {
+                    _showCategoriesMultiSelect(context);
+                  },
+                  child: Icon(
+                    Icons.unfold_more_rounded,
+                    color: Pendu.color('90A0B2'),
+                  ),
+                ),
+              ],
+            )),
+        SizedBox(height: 10),
+      ],
+    );
+  }
+
   Widget _builtTextField({
     String title,
     String svgUrl,
@@ -71,8 +224,6 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
         SizedBox(height: 10.0),
         Container(
-          //   height: hight != 0 ? hight : 200,
-          // decoration: BoxDecoration(borderRadius: BorderRadius.circular(8.0)),
           child: TextFormField(
             maxLines: 1,
             controller: controller,
@@ -112,7 +263,61 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Widget _uploadButton() {
+  Future getCameraImage(File images) async {
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        images = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  Future getGalaryImage(File images) async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        images = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  _showPicker(File images) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text('Photo Library'),
+                      onTap: () {
+                        getGalaryImage(images);
+                        Navigator.of(context).pop();
+                      }),
+                  new ListTile(
+                    leading: new Icon(Icons.photo_camera),
+                    title: new Text('Camera'),
+                    onTap: () {
+                      getCameraImage(images);
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  Widget _uploadButton(File images) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
       child: DottedBorder(
@@ -125,7 +330,9 @@ class _RegisterPageState extends State<RegisterPage> {
           width: MediaQuery.of(context).size.width / 2 - 30,
           height: 45,
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              _showPicker(images);
+            },
             style: ElevatedButton.styleFrom(
               elevation: 0,
               primary: Pendu.color('F6FEFA'),
@@ -149,7 +356,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Widget _buildProfileUpload() {
+  Widget _buildProfileUpload(File images) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.0),
       child: DottedBorder(
@@ -162,7 +369,9 @@ class _RegisterPageState extends State<RegisterPage> {
           width: MediaQuery.of(context).size.width - 30,
           height: 45,
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              _showPicker(images);
+            },
             style: ElevatedButton.styleFrom(
               elevation: 0,
               primary: Pendu.color('F6FEFA'),
@@ -170,16 +379,15 @@ class _RegisterPageState extends State<RegisterPage> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5.0),
               ),
-              // side: BorderSide(
-              //   color: Pendu.color('90A0B2'),
-              // ),
             ),
-            child: SvgPicture.asset(
-              'assets/svg_icon/upload.svg',
-              height: 40,
-              width: 40,
-              color: Theme.of(context).accentColor,
-            ),
+            child: (_profileImg != null)
+                ? Text('Image Uploaded')
+                : SvgPicture.asset(
+                    'assets/svg_icon/upload.svg',
+                    height: 40,
+                    width: 40,
+                    color: Theme.of(context).accentColor,
+                  ),
           ),
         ),
       ),
@@ -192,8 +400,9 @@ class _RegisterPageState extends State<RegisterPage> {
       height: 45,
       child: ElevatedButton(
         onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => HomePage()));
+          if (_formKey.currentState.validate()) {
+            _signup();
+          }
         },
         style: ElevatedButton.styleFrom(
           elevation: 0,
@@ -202,9 +411,6 @@ class _RegisterPageState extends State<RegisterPage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
-          // side: BorderSide(
-          //   color: Pendu.color('90A0B2'),
-          // ),
         ),
         child: Text(
           'Submit application',
@@ -231,146 +437,176 @@ class _RegisterPageState extends State<RegisterPage> {
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(15.0),
                     topRight: Radius.circular(15.0))),
-            child: ListView(
-              children: [
-                Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Become a dropper',
-                    style: PenduTextStyle().headerStyle,
+            child: Form(
+              key: _formKey,
+              child: ListView(
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Become a dropper',
+                      style: PenduTextStyle().headerStyle,
+                    ),
                   ),
-                ),
-                SizedBox(height: 20.0),
-                Row(
-                  children: [
-                    Expanded(
-                      child: _builtTextField(
-                        title: 'First Name',
-                        svgUrl: 'assets/svg_icon/profile.svg',
-                        hinText: 'John',
-                        validator: (fName) {
-                          if (fName == null || fName.isEmpty) {
-                            return 'First Name is required';
-                          }
-                          return null;
-                        },
-                        controller: firstNameController,
+                  SizedBox(height: 20.0),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _builtTextField(
+                          title: 'First Name',
+                          svgUrl: 'assets/svg_icon/profile.svg',
+                          hinText: 'John',
+                          validator: (fName) {
+                            if (fName == null || fName.isEmpty) {
+                              return 'First Name is required';
+                            }
+                            return null;
+                          },
+                          controller: firstNameController,
+                        ),
                       ),
-                    ),
-                    SizedBox(width: 10.0),
-                    Expanded(
-                      child: _builtTextField(
-                        title: 'Last Name',
-                        svgUrl: 'assets/svg_icon/profile.svg',
-                        hinText: 'Doe',
-                        validator: (lName) {
-                          if (lName == null || lName.isEmpty) {
-                            return 'Last Name is required';
-                          }
-                          return null;
-                        },
-                        controller: lastNameController,
+                      SizedBox(width: 10.0),
+                      Expanded(
+                        child: _builtTextField(
+                          title: 'Last Name',
+                          svgUrl: 'assets/svg_icon/profile.svg',
+                          hinText: 'Doe',
+                          validator: (lName) {
+                            if (lName == null || lName.isEmpty) {
+                              return 'Last Name is required';
+                            }
+                            return null;
+                          },
+                          controller: lastNameController,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                _builtTextField(
-                  title: 'Email',
-                  svgUrl: 'assets/svg_icon/mail.svg',
-                  hinText: 'Enter your email',
-                  validator: (eMail) {
-                    if (eMail == null || eMail.isEmpty) {
-                      return 'Email Name is required';
-                    } else if (!EmailValidator.validate(eMail)) {
-                      return 'Invalid Email';
-                    }
-                    return null;
-                  },
-                  controller: emailController,
-                ),
-                _builtTextField(
-                  title: 'Phone No',
-                  svgUrl: 'assets/svg_icon/telephone.svg',
-                  hinText: '+880',
-                  validator: (cnt) {
-                    if (cnt == null || cnt.isEmpty) {
-                      return 'Phone number is required';
-                    }
-                    if (cnt.length < 9) {
-                      return "Please enter valid phone";
-                    }
-                    return null;
-                  },
-                  controller: contactController,
-                ),
-                _builtTextField(
-                  title: 'Password',
-                  svgUrl: 'assets/svg_icon/unlock.svg',
-                  hinText: '*** *** *** ***',
-                  validator: (pass) {
-                    if (pass == null || pass.isEmpty) {
-                      return 'Password is required';
-                    }
-                    if (pass.length < 8) {
-                      return "Password at least 8 character";
-                    }
-                    return null;
-                  },
-                  controller: passController,
-                ),
-                _builtTextField(
-                  title: 'ABN',
-                  svgUrl: 'assets/svg_icon/ABN.svg',
-                  hinText: '*** *** *** ***',
-                  validator: (abn) {
-                    if (abn == null || abn.isEmpty) {
-                      return 'ABN number is required';
-                    }
-                    if (abn.length < 5) {
-                      return "Please enter valid ABN number";
-                    }
-                    return null;
-                  },
-                  controller: abnController,
-                ),
+                    ],
+                  ),
+                  _builtTextField(
+                    title: 'Email',
+                    svgUrl: 'assets/svg_icon/mail.svg',
+                    hinText: 'Enter your email',
+                    validator: (eMail) {
+                      if (eMail == null || eMail.isEmpty) {
+                        return 'Email Name is required';
+                      } else if (!EmailValidator.validate(eMail)) {
+                        return 'Invalid Email';
+                      }
+                      return null;
+                    },
+                    controller: emailController,
+                  ),
+                  _builtTextField(
+                    title: 'Phone No',
+                    svgUrl: 'assets/svg_icon/telephone.svg',
+                    hinText: '+880',
+                    validator: (cnt) {
+                      if (cnt == null || cnt.isEmpty) {
+                        return 'Phone number is required';
+                      }
+                      if (cnt.length < 9) {
+                        return "Please enter valid phone";
+                      }
+                      return null;
+                    },
+                    controller: contactController,
+                  ),
+                  _builtTextField(
+                    title: 'Password',
+                    svgUrl: 'assets/svg_icon/unlock.svg',
+                    hinText: '*** *** *** ***',
+                    validator: (pass) {
+                      if (pass == null || pass.isEmpty) {
+                        return 'Password is required';
+                      }
+                      if (pass.length < 8) {
+                        return "Password at least 8 character";
+                      }
+                      return null;
+                    },
+                    controller: passController,
+                  ),
 
-                //!Need to work from here
-                _builtTextField(
-                    title: 'Vehicle type',
-                    svgUrl: 'assets/svg_icon/vehicle_type.svg',
-                    hinText: 'Select your vehicle',
-                    isSufix: true),
-                _builtTextField(
-                    title: 'Please select category',
-                    svgUrl: 'assets/svg_icon/category.svg',
-                    hinText: 'Select your category',
-                    isSufix: true),
-                SizedBox(height: 10.0),
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Upload driving licence -Front & Back',
-                      style: PenduTextStyle().subHeaderStyle,
-                    )),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _uploadButton(),
-                    _uploadButton(),
-                  ],
-                ),
-                SizedBox(height: 10.0),
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Upload profile image',
-                      style: PenduTextStyle().subHeaderStyle,
-                    )),
-                _buildProfileUpload(),
-                _buildButton(),
-              ],
+                  //! Testing
+
+                  _builtTextField(
+                    title: 'ABN',
+                    svgUrl: 'assets/svg_icon/ABN.svg',
+                    hinText: '*** *** *** ***',
+                    validator: (abn) {
+                      if (abn == null || abn.isEmpty) {
+                        return 'ABN number is required';
+                      }
+                      if (abn.length < 5) {
+                        return "Please enter valid ABN number";
+                      }
+                      return null;
+                    },
+                    controller: abnController,
+                  ),
+
+                  //!Need to work from here
+
+                  _buildVehicleType(),
+                  _buildCategoryType(),
+
+                  SizedBox(height: 10.0),
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Upload driving licence -Front & Back',
+                        style: PenduTextStyle().subHeaderStyle,
+                      )),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _uploadButton(_dLFont),
+                      _uploadButton(_dLBack),
+                    ],
+                  ),
+                  SizedBox(height: 10.0),
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Upload profile image',
+                        style: PenduTextStyle().subHeaderStyle,
+                      )),
+                  _buildProfileUpload(_profileImg),
+                  _buildButton(),
+                ],
+              ),
             ),
           ),
         ));
+  }
+
+  void _signup() async {
+    if (vehicleId = null) {
+      ResponseDroperRegisterModel rdrm = await CallApi(context).callSignupApi(
+          firstNameController.text,
+          lastNameController.text,
+          emailController.text,
+          contactController.text,
+          abnController.text,
+          passController.text,
+          vehicleId,
+          serviceIdList);
+      rdrm.status == 200
+          ? _showSuccessMessage(rdrm.message)
+          : _showErrorMessage(rdrm.message);
+      // Navigator.push(
+      //     context, MaterialPageRoute(builder: (context) => HomePage()));
+    } else {
+      SnackBarClass.snackBarMethod(
+          message: 'Please input Image ', context: context);
+    }
+  }
+
+  _showSuccessMessage(String msg) {
+    SnackBarClass.snackBarMethod(message: msg, context: context);
+  }
+
+  _showErrorMessage(String msg) {
+    SnackBarClass.snackBarMethod(message: msg, context: context);
   }
 }

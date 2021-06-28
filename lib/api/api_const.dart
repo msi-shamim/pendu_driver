@@ -19,7 +19,6 @@ class PenduConstants {
   static final couponDataUrl = "/api/v1/coupons";
   static final serviceCategoryUrl = "/api/v1/service-categories";
 
-  
   static final contentType = 'Content-Type';
   static final contentTypeValue = 'application/json';
   static final acceptType = 'Accept';
@@ -27,6 +26,6 @@ class PenduConstants {
   static final accessToken = 'access_token';
 
   //sharedPrefs
-  static final spUser = 'current_user';
+  static final spDroper = 'current_user';
   static final spToken = 'user_token';
 }
