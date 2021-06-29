@@ -12,3 +12,6 @@ export 'package:pendu_driver/model/response_service_category_model.dart';
 export 'package:pendu_driver/model/response_vehical_model.dart';
 export 'package:pendu_driver/model/submit_task_offer_model.dart';
 export 'package:pendu_driver/model/put_droper_update_model.dart';
+export 'package:pendu_driver/model/response_all_task_for_map_model.dart';
+//export 'package:pendu_driver/model/response_single_task_info_model.dart';
+//export 'package:pendu_driver/model/response_single_task_via_offerId_model.dart';

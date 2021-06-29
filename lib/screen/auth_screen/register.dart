@@ -11,6 +11,7 @@ import 'package:pendu_driver/screen/home_screen/home_page.dart';
 import 'package:pendu_driver/screen/screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_select/smart_select.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -37,39 +38,15 @@ class _RegisterPageState extends State<RegisterPage> {
       .map((service) => MultiSelectItem<ServiceCategory>(service, service.name))
       .toList();
   List<ServiceCategory> _selectedService = [];
+  String vehicleType = '';
 
-  void _showCategoriesMultiSelect(BuildContext context) {
-    showModalBottomSheet(
-      isScrollControlled: true,
-      context: context,
-      builder: (ctx) {
-        return MultiSelectBottomSheet(
-          title: Text('Select Categories',
-              style: TextStyle(color: Colors.black, fontSize: 16)),
-          items: _items,
-          initialValue: _selectedService,
-          selectedColor: Theme.of(context).accentColor,
-          checkColor: Colors.white,
-          maxChildSize: 0.8,
-          initialChildSize: 0.4,
-          confirmText: Text('Confirm',
-              style: TextStyle(
-                color: Theme.of(context).accentColor,
-              )),
-          cancelText: Text('Cancel',
-              style: TextStyle(
-                color: Colors.red,
-              )),
-          onConfirm: (values) {
-            setState(() {
-              _selectedService = values;
-            });
-          },
-        );
-      },
-    );
-    print('Selceted Service: $_selectedService');
-  }
+  List<S2Choice<String>> vehicleList = [
+    S2Choice<String>(value: '1', title: 'Car'),
+    S2Choice<String>(value: '2', title: 'Mini Van'),
+    S2Choice<String>(value: '3', title: 'SVG'),
+    S2Choice<String>(value: '4', title: 'Track'),
+    S2Choice<String>(value: '5', title: 'Caverd Van'),
+  ];
 
   final _formKey = GlobalKey<FormState>();
   final picker = ImagePicker();
@@ -108,6 +85,39 @@ class _RegisterPageState extends State<RegisterPage> {
     return regExp.hasMatch(pass);
   }
 
+  void _showCategoriesMultiSelect(BuildContext context) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (ctx) {
+        return MultiSelectBottomSheet(
+          title: Text('Select Categories',
+              style: TextStyle(color: Colors.black, fontSize: 16)),
+          items: _items,
+          initialValue: _selectedService,
+          selectedColor: Theme.of(context).accentColor,
+          checkColor: Colors.white,
+          maxChildSize: 0.8,
+          initialChildSize: 0.4,
+          confirmText: Text('Confirm',
+              style: TextStyle(
+                color: Theme.of(context).accentColor,
+              )),
+          cancelText: Text('Cancel',
+              style: TextStyle(
+                color: Colors.red,
+              )),
+          onConfirm: (values) {
+            setState(() {
+              _selectedService = values;
+            });
+          },
+        );
+      },
+    );
+    print('Selceted Service: $_selectedService');
+  }
+
   Widget _buildVehicleType() {
     return Column(
       children: [
@@ -125,30 +135,40 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
         SizedBox(height: 10.0),
         Container(
-            height: 40,
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
-            decoration: BoxDecoration(
-              color: Pendu.color('F9F9F9'),
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Select your vehicle',
-                  style: TextStyle(fontSize: 16, color: Colors.black54),
-                ),
-                InkWell(
-                  onTap: () {
-                    _showCategoriesMultiSelect(context);
+          height: 40,
+          //padding: EdgeInsets.only(top: 10),
+          decoration: BoxDecoration(
+            color: Pendu.color('F9F9F9'),
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          child: Row(
+            children: [
+              Text(
+                'Select your Vehicle',
+                style: TextStyle(fontSize: 16, color: Colors.black54),
+              ),
+              Expanded(
+                child: SmartSelect<String>.single(
+                  title: 'Select your Vehicle',
+                  value: vehicleType,
+                  choiceItems: vehicleList,
+                  onChange: (selected) =>
+                      setState(() => vehicleType = selected.value),
+                  modalType: S2ModalType.bottomSheet,
+                  tileBuilder: (context, state) {
+                    return S2Tile.fromState(
+                      state,
+                      trailing: Icon(Icons.unfold_more_rounded),
+                      isTwoLine: false,
+                      title: SizedBox(),
+                      //leading: Text('Select your vehicle type'),
+                    );
                   },
-                  child: Icon(
-                    Icons.unfold_more_rounded,
-                    color: Pendu.color('90A0B2'),
-                  ),
                 ),
-              ],
-            )),
+              ),
+            ],
+          ),
+        ),
         SizedBox(height: 10),
       ],
     );

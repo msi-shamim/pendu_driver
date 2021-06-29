@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pendu_driver/api/api_const.dart';
 import 'package:pendu_driver/model/response_droper_profile_with_level_model.dart';
+import 'package:pendu_driver/model/response_single_task_info_model.dart';
+import 'package:pendu_driver/model/response_single_task_via_offerId_model.dart';
 import 'package:pendu_driver/screen/home_screen/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pendu_driver/model/model.dart';
@@ -551,6 +553,123 @@ class CallApi {
       } else {
         print(response.reasonPhrase);
       }
+    }
+  }
+
+  Future<ResponseSingleTaskInfoViaOfferIdModel>
+      callGetSingleTaskViaOffersIdResponseApi(
+          String accessToken, int offersId) async {
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $accessToken'
+    };
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            'https://www.pendu.increments.info/api/v1/dropper/task-view/offers/$offersId'));
+    request.body = '''''';
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      var str = await response.stream.bytesToString();
+      print('from Single Task via OfferID API: $str');
+      return ResponseSingleTaskInfoViaOfferIdModel.fromJson(str);
+    } else {
+      print(response.reasonPhrase);
+      return null;
+    }
+  }
+
+  Future<ResponseAllTaskForMapModel> callGetAllTaskResponseForMapApi(
+      String accessToken) async {
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $accessToken'
+    };
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            'https://www.pendu.increments.info/api/v1/dropper/tasks/map-show'));
+    request.body = '''''';
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      var str = await response.stream.bytesToString();
+      print('from All Task API: $str');
+      return ResponseAllTaskForMapModel.fromJson(str);
+    } else {
+      print(response.reasonPhrase);
+      return null;
+    }
+  }
+
+  Future<ResponseSingleTaskInfoModel> callGetSingleTaskResponseApi(
+      String accessToken, int taskId) async {
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $accessToken'
+    };
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            'https://www.pendu.increments.info/api/v1/dropper/tasks/$taskId'));
+    request.body = '''''';
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      var str = await response.stream.bytesToString();
+      print('from Single Task API: $str');
+      return ResponseSingleTaskInfoModel.fromJson(str);
+    } else {
+      print(response.reasonPhrase);
+      return null;
+    }
+  }
+
+  Future<void> callSubmitTaskMakeOfferApi(
+      String accessToken, double offerAmount, int taskId) async {
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $accessToken'
+    };
+    var request = http.Request(
+        'POST',
+        Uri.parse(
+            'https://www.pendu.increments.info/api/v1/dropper/tasks/$taskId'));
+    request.body = json.encode({"amount": offerAmount});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
+  Future<void> callStartTaskApi(String accessToken, int offerId) async {
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $accessToken'
+    };
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            'https://www.pendu.increments.info/api/v1/dropper/task-start'));
+    request.body = json.encode({"offer_id": offerId});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    } else {
+      print(response.reasonPhrase);
     }
   }
 
