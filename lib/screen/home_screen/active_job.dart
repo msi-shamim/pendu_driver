@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:pendu_driver/screen/screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
 
+import '../../main_landing_page.dart';
+
 class ActiveJob extends StatefulWidget {
   @override
   _ActiveJobState createState() => _ActiveJobState();
@@ -104,7 +106,7 @@ class _ActiveJobState extends State<ActiveJob> {
                           ],
                         ),
                         SizedBox(height: 5.0),
-                        DeliverAddressTable(
+                        DeliverAddressTableUtils(
                           defineTextSTyle: TextStyle(
                               color: Pendu.color('90A0B2'), fontSize: 10),
                           lineHight: 20,
@@ -134,8 +136,11 @@ class _ActiveJobState extends State<ActiveJob> {
               height: 35,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => JobSearch()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              MainLandingPage(seclectValue: 1)));
                 },
                 style: ElevatedButton.styleFrom(
                   elevation: 0,
@@ -144,9 +149,6 @@ class _ActiveJobState extends State<ActiveJob> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
-                  // side: BorderSide(
-                  //   color: Pendu.color('90A0B2'),
-                  // ),
                 ),
                 child: Text(
                   'Continue task',
@@ -183,7 +185,13 @@ class _ActiveJobState extends State<ActiveJob> {
                   width: MediaQuery.of(context).size.width / 1.5,
                   height: 55,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  JobSearchFromMapBottomSheet()));
+                    },
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
                       primary: Theme.of(context).primaryColor,
@@ -191,9 +199,6 @@ class _ActiveJobState extends State<ActiveJob> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),
                       ),
-                      // side: BorderSide(
-                      //   color: Pendu.color('90A0B2'),
-                      // ),
                     ),
                     child: Text(
                       'Start searching jobs',

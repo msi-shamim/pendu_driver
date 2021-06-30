@@ -53,7 +53,7 @@ class _NoticeBoardState extends State<NoticeBoard> {
       child: ElevatedButton(
         onPressed: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => ProfileNoticeBoard()));
+              MaterialPageRoute(builder: (context) => NoticeBoardPage()));
         },
         style: ElevatedButton.styleFrom(
           elevation: 0,
