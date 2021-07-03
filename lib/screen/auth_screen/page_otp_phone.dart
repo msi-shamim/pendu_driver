@@ -7,12 +7,12 @@ import 'package:pendu_driver/screen/home_screen/page_home.dart';
 import 'package:pendu_driver/utils/utils.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-class OtpPhonePage extends StatefulWidget {
+class OtpPhoneVerifyPage extends StatefulWidget {
   @override
-  _OtpPhonePageState createState() => _OtpPhonePageState();
+  _OtpPhoneVerifyPageState createState() => _OtpPhoneVerifyPageState();
 }
 
-class _OtpPhonePageState extends State<OtpPhonePage> {
+class _OtpPhoneVerifyPageState extends State<OtpPhoneVerifyPage> {
   TextEditingController textEditingController = TextEditingController();
 
   StreamController<ErrorAnimationType> errorController;

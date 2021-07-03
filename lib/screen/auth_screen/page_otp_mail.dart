@@ -1,16 +1,23 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:pendu_driver/api/api_call.dart';
+import 'package:pendu_driver/model/model.dart';
 import 'package:pendu_driver/screen/auth_screen/auth_screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OtpMailPage extends StatefulWidget {
+  final String mail;
+  OtpMailPage({@required this.mail});
   @override
-  _OtpMailPageState createState() => _OtpMailPageState();
+  _OtpMailPageState createState() => _OtpMailPageState(mail);
 }
 
 class _OtpMailPageState extends State<OtpMailPage> {
+  final String mail;
+  _OtpMailPageState(this.mail);
+
   TextEditingController textEditingController = TextEditingController();
 
   StreamController<ErrorAnimationType> errorController;
@@ -139,7 +146,7 @@ class _OtpMailPageState extends State<OtpMailPage> {
                 if (fullFill) {
                   formKey.currentState.validate();
                   // conditions for validating
-                  if (currentText.length != 5 || currentText != "12345") {
+                  if (currentText.length != 6) {
                     errorController.add(ErrorAnimationType
                         .shake); // Triggering error shake animation
                     setState(() {
@@ -149,11 +156,7 @@ class _OtpMailPageState extends State<OtpMailPage> {
                     setState(
                       () {
                         hasError = false;
-                        // snackBar("OTP Verified!!");
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SetNewPasswordPage()));
+                        _onPressed();
                       },
                     );
                   }
@@ -227,5 +230,27 @@ class _OtpMailPageState extends State<OtpMailPage> {
         ),
       ),
     );
+  }
+
+  void _onPressed() async {
+    print('CurrentText : $currentText');
+    ResponseOtpConfirmModel rmm =
+        await CallApi(context).callConfirmOTPApi(mail, int.parse(currentText));
+
+    rmm.status == 200 ? _moveToNext() : _showErrorMessage(rmm.message);
+  }
+
+  _moveToNext() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                SetNewPasswordPage(mail: mail, otp: int.parse(currentText))));
+    SnackBarUtils.snackBarMethod(
+        message: "Change your password please", context: context);
+  }
+
+  _showErrorMessage(String msg) {
+    SnackBarUtils.snackBarMethod(message: msg, context: context);
   }
 }

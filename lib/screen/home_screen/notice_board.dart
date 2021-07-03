@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pendu_driver/api/api_call.dart';
 import 'package:pendu_driver/screen/screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
 
@@ -62,9 +63,6 @@ class _NoticeBoardState extends State<NoticeBoard> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
-          // side: BorderSide(
-          //   color: Pendu.color('90A0B2'),
-          // ),
         ),
         child: Text(
           'See all',

@@ -1,11 +1,42 @@
 // To parse this JSON data, do
 //
-//     final postLoginDropperModel = postLoginDropperModelFromMap(jsonString);
+//     final responseLoginModel = responseLoginModelFromMap(jsonString);
 
 import 'dart:convert';
 
-class ResponseLoginDropperModel {
-  ResponseLoginDropperModel({
+class ResponseLoginModel {
+  ResponseLoginModel({
+    this.status,
+    this.message,
+    this.droperList,
+  });
+
+  final int status;
+  final String message;
+  final DroperList droperList;
+
+  factory ResponseLoginModel.fromJson(String str) =>
+      ResponseLoginModel.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory ResponseLoginModel.fromMap(Map<String, dynamic> json) =>
+      ResponseLoginModel(
+        status: json["status"] == null ? null : json["status"],
+        message: json["message"] == null ? null : json["message"],
+        droperList:
+            json["data"] == null ? null : DroperList.fromMap(json["data"]),
+      );
+
+  Map<String, dynamic> toMap() => {
+        "status": status == null ? null : status,
+        "message": message == null ? null : message,
+        "data": droperList == null ? null : droperList.toMap(),
+      };
+}
+
+class DroperList {
+  DroperList({
     this.accessToken,
     this.tokenType,
     this.expiresIn,
@@ -17,13 +48,12 @@ class ResponseLoginDropperModel {
   final int expiresIn;
   final Dropper dropper;
 
-  factory ResponseLoginDropperModel.fromJson(String str) =>
-      ResponseLoginDropperModel.fromMap(json.decode(str));
+  factory DroperList.fromJson(String str) =>
+      DroperList.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory ResponseLoginDropperModel.fromMap(Map<String, dynamic> json) =>
-      ResponseLoginDropperModel(
+  factory DroperList.fromMap(Map<String, dynamic> json) => DroperList(
         accessToken: json["access_token"] == null ? null : json["access_token"],
         tokenType: json["token_type"] == null ? null : json["token_type"],
         expiresIn: json["expires_in"] == null ? null : json["expires_in"],
@@ -59,6 +89,7 @@ class Dropper {
     this.createdAt,
     this.updatedAt,
     this.fullName,
+    this.referralLink,
   });
 
   final int id;
@@ -79,6 +110,7 @@ class Dropper {
   final DateTime createdAt;
   final DateTime updatedAt;
   final String fullName;
+  final String referralLink;
 
   factory Dropper.fromJson(String str) => Dropper.fromMap(json.decode(str));
 
@@ -110,6 +142,8 @@ class Dropper {
             ? null
             : DateTime.parse(json["updated_at"]),
         fullName: json["full_name"] == null ? null : json["full_name"],
+        referralLink:
+            json["referral_link"] == null ? null : json["referral_link"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -131,5 +165,6 @@ class Dropper {
         "created_at": createdAt == null ? null : createdAt.toIso8601String(),
         "updated_at": updatedAt == null ? null : updatedAt.toIso8601String(),
         "full_name": fullName == null ? null : fullName,
+        "referral_link": referralLink == null ? null : referralLink,
       };
 }

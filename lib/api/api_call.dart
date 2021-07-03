@@ -6,6 +6,7 @@ import 'package:pendu_driver/main_landing_page.dart';
 import 'package:pendu_driver/model/response_droper_profile_with_level_model.dart';
 import 'package:pendu_driver/model/response_single_task_info_model.dart';
 import 'package:pendu_driver/model/response_single_task_via_offerId_model.dart';
+import 'package:pendu_driver/screen/auth_screen/auth_screen.dart';
 import 'package:pendu_driver/screen/home_screen/page_home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pendu_driver/model/model.dart';
@@ -26,13 +27,13 @@ class CallApi {
 
     if (response.statusCode == 200) {
       var str = await response.stream.bytesToString();
-      ResponseLoginDropperModel rld = ResponseLoginDropperModel.fromJson(str);
-      print('from Login API: token: ${rld.accessToken}');
+      ResponseLoginModel rld = ResponseLoginModel.fromJson(str);
+      print('from Login API: token: ${rld.droperList.accessToken}');
 
-      String dropperStr = json.encode(rld.dropper);
+      String dropperStr = json.encode(rld.droperList.dropper);
 
       // print('UserStr: $userStr');
-      _allocateInSharedPref(_context, dropperStr, rld.accessToken);
+      _allocateInSharedPref(_context, dropperStr, rld.droperList.accessToken);
     } else {
       print(response.reasonPhrase);
       return null;
@@ -50,7 +51,6 @@ class CallApi {
       List<int> serviceIds) async {
     var headers = {
       'Content-Type': 'application/json',
-      'Accept': 'application/json'
     };
     var request = http.Request('POST',
         Uri.parse('https://www.pendu.increments.info/api/v1/dropper/register'));
@@ -155,6 +155,7 @@ class CallApi {
     }
   }
 
+//Send mail to user
   Future<ResponseMailModel> callSendMailApi(String mail) async {
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
@@ -176,7 +177,8 @@ class CallApi {
   }
 
   //Confirm OTP
-  Future<void> callConfirmOTPApi(String inputMail, int otpCode) async {
+  Future<ResponseOtpConfirmModel> callConfirmOTPApi(
+      String inputMail, int otpCode) async {
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
         'POST',
@@ -190,14 +192,15 @@ class CallApi {
     if (response.statusCode == 200) {
       var str = await response.stream.bytesToString();
       print('from verify Mail: $str');
-      //return ResponseUserProfileModel.fromJson(str);
+      return ResponseOtpConfirmModel.fromJson(str);
     } else {
       print(response.reasonPhrase);
-      // return null;
+      return null;
     }
   }
 
-  Future<void> callChangePasswordApi(
+//Confirm password
+  Future<ResponseSetNewPassModel> callChangePasswordApi(
       String inputMail, String password, int otpCode) async {
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
@@ -213,6 +216,7 @@ class CallApi {
     if (response.statusCode == 200) {
       var str = await response.stream.bytesToString();
       print('from  ResetPassword: $str');
+      return ResponseSetNewPassModel.fromJson(str);
     } else {
       print(response.reasonPhrase);
       return null;
@@ -675,33 +679,42 @@ class CallApi {
   }
 
 //Logout Function
-  Future<bool> callDropperLogout(String accessToken) async {
-    var headers = {
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $accessToken,'
-    };
-    var request = http.Request('POST',
-        Uri.parse('https://www.pendu.increments.info/api/v1/dropper/logout'));
+  Future<bool> callDropperLogout(
+      String accessToken, BuildContext context) async {
+    Future<SharedPreferences> sharedPref = SharedPreferences.getInstance();
+    sharedPref.then((value) {
+      value.remove(PenduConstants.spDroper);
+      value.remove(PenduConstants.spToken);
+      Navigator.pushReplacement<void, void>(
+          context, MaterialPageRoute(builder: (context) => LoginPage()));
+    });
+    return null;
+    // var headers = {
+    //   'Accept': 'application/json',
+    //   'Authorization': 'Bearer $accessToken,'
+    // };
+    // var request = http.Request('POST',
+    //     Uri.parse('https://www.pendu.increments.info/api/v1/dropper/logout'));
 
-    request.headers.addAll(headers);
+    // request.headers.addAll(headers);
 
-    http.StreamedResponse response = await request.send();
+    // http.StreamedResponse response = await request.send();
 
-    if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
-      // var token = sharedPreferences.getString(PenduConstants.spToken);
-      bool wipeUser, wipeToken;
-      wipeUser =
-          await sharedPreferences.setString(PenduConstants.spDroper, null);
-      wipeToken =
-          await sharedPreferences.setString(PenduConstants.spToken, null);
-      return wipeUser && wipeToken;
-    } else {
-      print(response.reasonPhrase);
-      return false;
-    }
+    // if (response.statusCode == 200) {
+    //   print(await response.stream.bytesToString());
+    //   SharedPreferences sharedPreferences =
+    //       await SharedPreferences.getInstance();
+    //   // var token = sharedPreferences.getString(PenduConstants.spToken);
+    //   bool wipeUser, wipeToken;
+    //   wipeUser =
+    //       await sharedPreferences.setString(PenduConstants.spDroper, null);
+    //   wipeToken =
+    //       await sharedPreferences.setString(PenduConstants.spToken, null);
+    //   return wipeUser && wipeToken;
+    // } else {
+    //   print(response.reasonPhrase);
+    // return false;
+    // }
   }
 }
 
@@ -719,7 +732,8 @@ void _allocateInSharedPref(
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => MainLandingPage(seclectValue: 0)));
+            builder: (context) => MainLandingPage(
+                dropper: dDroper, token: token, seclectValue: 0)));
   } else {
     print('from API: Token null');
   }

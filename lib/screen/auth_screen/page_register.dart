@@ -51,7 +51,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   final picker = ImagePicker();
   File _dLFont, _dLBack, _profileImg;
-  int vehicleId;
+  int vehicleId = 1;
   List<int> serviceIdList = [];
 
   final firstNameController = TextEditingController();
@@ -601,7 +601,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void _signup() async {
-    if (vehicleId = null) {
+    if (vehicleId != null) {
       ResponseDroperRegisterModel rdrm = await CallApi(context).callSignupApi(
           firstNameController.text,
           lastNameController.text,
@@ -610,7 +610,7 @@ class _RegisterPageState extends State<RegisterPage> {
           abnController.text,
           passController.text,
           vehicleId,
-          serviceIdList);
+          [1, 2]);
       rdrm.status == 200
           ? _showSuccessMessage(rdrm.message)
           : _showErrorMessage(rdrm.message);

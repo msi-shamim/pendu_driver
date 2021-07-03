@@ -1,5 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:pendu_driver/api/api_call.dart';
+import 'package:pendu_driver/model/model.dart';
 import 'package:pendu_driver/screen/auth_screen/auth_screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
 
@@ -89,10 +91,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                         text: 'Reset password',
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => OtpMailPage()));
+                            _onPressed();
                           }
                         }),
 
@@ -109,5 +108,25 @@ class _ResetPasswordState extends State<ResetPassword> {
         ),
       ),
     );
+  }
+
+  void _onPressed() async {
+    ResponseMailModel rmm =
+        await CallApi(context).callSendMailApi(emailController.text);
+
+    rmm.status == 200 ? _moveToNext() : _showErrorMessage(rmm.message);
+  }
+
+  _moveToNext() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => OtpMailPage(mail: emailController.text)));
+    SnackBarUtils.snackBarMethod(
+        message: "OTP send to your Email", context: context);
+  }
+
+  _showErrorMessage(String msg) {
+    SnackBarUtils.snackBarMethod(message: msg, context: context);
   }
 }

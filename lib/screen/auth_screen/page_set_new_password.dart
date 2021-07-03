@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:pendu_driver/api/api_call.dart';
+import 'package:pendu_driver/model/model.dart';
 import 'package:pendu_driver/screen/auth_screen/auth_screen.dart';
 
 import 'package:pendu_driver/utils/utils.dart';
 
 class SetNewPasswordPage extends StatefulWidget {
+  final String mail;
+  final int otp;
+  SetNewPasswordPage({@required this.mail, @required this.otp});
   @override
-  _SetNewPasswordPageState createState() => _SetNewPasswordPageState();
+  _SetNewPasswordPageState createState() => _SetNewPasswordPageState(mail, otp);
 }
 
 class _SetNewPasswordPageState extends State<SetNewPasswordPage> {
+  final String mail;
+  final int otp;
+  _SetNewPasswordPageState(this.mail, this.otp);
+
   final _formKey = GlobalKey<FormState>();
   final passController = TextEditingController();
   final confirmPassController = TextEditingController();
@@ -94,7 +103,7 @@ class _SetNewPasswordPageState extends State<SetNewPasswordPage> {
                           }
                           if (passController.text !=
                               confirmPassController.text) {
-                            return "Password Do not match";
+                            return "Password do not match";
                           }
                           return null;
                         },
@@ -107,10 +116,7 @@ class _SetNewPasswordPageState extends State<SetNewPasswordPage> {
                           text: 'Reset password',
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LoginPage()));
+                              _onPressed();
                             }
                           }),
                     ],
@@ -123,5 +129,23 @@ class _SetNewPasswordPageState extends State<SetNewPasswordPage> {
         ),
       ),
     );
+  }
+
+  void _onPressed() async {
+    ResponseSetNewPassModel rsnp = await CallApi(context)
+        .callChangePasswordApi(mail, passController.text, otp);
+
+    rsnp.status == 200 ? _moveToNext() : _showErrorMessage(rsnp.message);
+  }
+
+  _moveToNext() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => LoginPage()));
+    SnackBarUtils.snackBarMethod(
+        message: "Password change successfully", context: context);
+  }
+
+  _showErrorMessage(String msg) {
+    SnackBarUtils.snackBarMethod(message: msg, context: context);
   }
 }
