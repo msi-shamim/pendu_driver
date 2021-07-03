@@ -1,18 +1,71 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pendu_driver/api/api_call.dart';
+import 'package:pendu_driver/api/api_manipulation.dart';
+import 'package:pendu_driver/model/model.dart';
+import 'package:pendu_driver/model/response_droper_profile_with_level_model.dart';
 import 'package:pendu_driver/screen/screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:rating_bar/rating_bar.dart';
 
 class ProfileWithMenuPage extends StatefulWidget {
+  final Dropper dropper;
+  final String token;
+
+  ProfileWithMenuPage({@required this.dropper, @required this.token});
   @override
-  _ProfileWithMenuPageState createState() => _ProfileWithMenuPageState();
+  _ProfileWithMenuPageState createState() =>
+      _ProfileWithMenuPageState(dropper, token);
 }
 
 class _ProfileWithMenuPageState extends State<ProfileWithMenuPage> {
+  final Dropper dropper;
+  final String token;
+
+  _ProfileWithMenuPageState(this.dropper, this.token);
   AllDAata varA = AllDAata();
-  double _rating = 4.00;
+  double _rating = 0.0;
+  double _accurancyRate = 0.0;
+  double _successRate = 0.0;
+  String _fullName = 'name';
+  double _balance = 0.0;
+  String _level = 'level';
+  DropperWithLevelList droperInfo;
+
+  @override
+  void initState() {
+    getUser();
+    super.initState();
+  }
+
+  void getUser() async {
+    if (token != null) {
+      droperInfo =
+          await ApiManipulation(context).getDropperProfileInfoWithLevel(token);
+
+      setState(() {
+        _rating =
+            (droperInfo.rating == null) ? 0.0 : double.parse(droperInfo.rating);
+        _accurancyRate = (droperInfo.averageAccuracy == null)
+            ? 0.0
+            : double.parse(droperInfo.averageAccuracy);
+        _successRate = (droperInfo.successRate == null)
+            ? 0.0
+            : double.parse(droperInfo.successRate);
+        _fullName =
+            (droperInfo.fullName == null) ? 'name' : droperInfo.fullName;
+        _balance = (droperInfo.balance == null)
+            ? 0.0
+            : double.parse(droperInfo.balance);
+        _level =
+            (droperInfo.level.title == null) ? 'Level' : droperInfo.level.title;
+      });
+    } else {
+      SnackBarUtils.snackBarMethod(
+          message: "Something went wrong", context: context);
+    }
+  }
 
   // SliverAppBar is declared in Scaffold.body, in slivers of a
   // CustomScrollView.
@@ -41,14 +94,19 @@ class _ProfileWithMenuPageState extends State<ProfileWithMenuPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    radius: 44,
-                    backgroundColor: Pendu.color('5BDB98'),
-                    child: CircleAvatar(
+                      radius: 44,
+                      backgroundColor: Pendu.color('5BDB98'),
+                      child: CircleAvatar(
                         radius: 40,
-                        backgroundImage: NetworkImage(varA.profileUrl)),
-                  ),
+                        backgroundImage: NetworkImage(
+                            'https://cultivatedculture.com/wp-content/uploads/2019/12/LinkedIn-Profile-Picture-Example-Madeline-Mann.jpeg'),
+                        // (droperInfo.profileImage == null)
+                        //     ? NetworkImage(
+                        //         'https://cultivatedculture.com/wp-content/uploads/2019/12/LinkedIn-Profile-Picture-Example-Madeline-Mann.jpeg')
+                        //     : NetworkImage(droperInfo.profileImage)),
+                      )),
                   Text(
-                    varA.profileName,
+                    _fullName,
                     style: TextStyle(fontSize: 16, color: Colors.black),
                   ),
                   Text(
@@ -90,7 +148,7 @@ class _ProfileWithMenuPageState extends State<ProfileWithMenuPage> {
                   ),
                 ),
                 Text(
-                  '\$1225.00',
+                  '\$ $_balance',
                   style: TextStyle(
                       fontSize: 26, color: Theme.of(context).accentColor),
                 ),
@@ -109,11 +167,11 @@ class _ProfileWithMenuPageState extends State<ProfileWithMenuPage> {
                       ),
                       Spacer(),
                       Padding(
-                        padding: const EdgeInsets.all(5.0),
+                        padding: EdgeInsets.all(5.0),
                         child: SvgPicture.asset('assets/svg_icon/rising.svg'),
                       ),
                       Text(
-                        'Rising',
+                        _level,
                         style: TextStyle(fontSize: 24, color: Colors.white),
                       )
                     ],
@@ -170,7 +228,7 @@ class _ProfileWithMenuPageState extends State<ProfileWithMenuPage> {
                     size: 16,
                   ),
                 ),
-                Text('(125)', style: PenduTextStyle().whiteTextStyle)
+                // Text('(125)', style: PenduTextStyle().whiteTextStyle)
               ],
             ),
           ),
@@ -195,17 +253,17 @@ class _ProfileWithMenuPageState extends State<ProfileWithMenuPage> {
             child: CircularPercentIndicator(
               radius: 65.0,
               lineWidth: 7.0,
-              percent: .89,
+              percent: _accurancyRate / 100,
               backgroundColor: Colors.white.withOpacity(0.5),
               header: Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
+                padding: EdgeInsets.only(bottom: 8.0),
                 child: Text(
                   'Accuracy rate',
                   style: TextStyle(color: Colors.white, fontSize: 14),
                 ),
               ),
-              center: new Text('90%',
-                  style: new TextStyle(
+              center: Text('$_accurancyRate' + '%',
+                  style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
                       fontSize: 16.0)),
@@ -234,7 +292,7 @@ class _ProfileWithMenuPageState extends State<ProfileWithMenuPage> {
             child: CircularPercentIndicator(
               radius: 65.0,
               lineWidth: 7.0,
-              percent: .95,
+              percent: _successRate / 100,
               backgroundColor: Colors.white.withOpacity(0.5),
               header: Padding(
                 padding: const EdgeInsets.only(bottom: 8.0),
@@ -243,7 +301,7 @@ class _ProfileWithMenuPageState extends State<ProfileWithMenuPage> {
                   style: TextStyle(color: Colors.white, fontSize: 14),
                 ),
               ),
-              center: new Text('95%',
+              center: new Text('$_successRate' + '%',
                   style: new TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
@@ -271,6 +329,32 @@ class _ProfileWithMenuPageState extends State<ProfileWithMenuPage> {
           ),
           Text(title),
         ],
+      );
+    }
+
+    Widget _buildMenuListLogout() {
+      return InkWell(
+        onTap: () {
+          CallApi(context).callDropperLogout(token, context);
+        },
+        child: Row(
+          children: [
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+              padding: EdgeInsets.all(5.0),
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5.0), color: Colors.red),
+              child: Icon(
+                Icons.logout,
+                color: Colors.white,
+                size: 28,
+              ),
+            ),
+            Text('Logout'),
+          ],
+        ),
       );
     }
 
@@ -447,6 +531,8 @@ class _ProfileWithMenuPageState extends State<ProfileWithMenuPage> {
                               iconUrl: 'assets/svg_icon/app_version.svg',
                               colorCode: 'F97A7A'),
                         ),
+                        SizedBox(height: 10),
+                        _buildMenuListLogout(),
                       ],
                     )),
               ),

@@ -28,6 +28,7 @@ class CallApi {
     if (response.statusCode == 200) {
       var str = await response.stream.bytesToString();
       ResponseLoginModel rld = ResponseLoginModel.fromJson(str);
+
       print('from Login API: token: ${rld.droperList.accessToken}');
 
       String dropperStr = json.encode(rld.droperList.dropper);
@@ -220,28 +221,6 @@ class CallApi {
     } else {
       print(response.reasonPhrase);
       return null;
-    }
-  }
-
-  Future<void> callSendReferMailApi(String mail, String accessToken) async {
-    var headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $accessToken'
-    };
-    var request = http.Request(
-        'POST',
-        Uri.parse(
-            'https://www.pendu.increments.info/api/v1/dropper/refer-n-earn'));
-    request.body = json.encode({"email": mail});
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
-
-    if (response.statusCode == 200) {
-      var str = await response.stream.bytesToString();
-      print('from Response mail: $str');
-    } else {
-      print(response.reasonPhrase);
     }
   }
 
@@ -678,6 +657,31 @@ class CallApi {
     }
   }
 
+  Future<ResponseSendReferMaillModel> callReferbyMailApi(
+      String accessToken, String mail) async {
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $accessToken'
+    };
+    var request = http.Request(
+        'POST',
+        Uri.parse(
+            'https://www.pendu.increments.info/api/v1/dropper/refer-n-earn'));
+    request.body = json.encode({"email": mail});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      var str = await response.stream.bytesToString();
+      print('from Refer Mail API: $str');
+      return ResponseSendReferMaillModel.fromJson(str);
+    } else {
+      print(response.reasonPhrase);
+      return null;
+    }
+  }
+
 //Logout Function
   Future<bool> callDropperLogout(
       String accessToken, BuildContext context) async {
@@ -724,7 +728,7 @@ void _allocateInSharedPref(
 
   await sharedPreferences.setString(PenduConstants.spDroper, dropper);
   await sharedPreferences.setString(PenduConstants.spToken, token);
-  print('from shared pref: $dropper');
+  print('from shared pref: $token');
 
   if (sharedPreferences.getString(PenduConstants.spToken) != null) {
     // ignore: unused_local_variable
@@ -735,6 +739,6 @@ void _allocateInSharedPref(
             builder: (context) => MainLandingPage(
                 dropper: dDroper, token: token, seclectValue: 0)));
   } else {
-    print('from API: Token null');
+    print('from shared pref: Token null');
   }
 }

@@ -9,6 +9,7 @@ export 'package:pendu_driver/model/response_login_model.dart';
 //export 'package:pendu_driver/model/response_droper_profile_with_level_model.dart';
 export 'package:pendu_driver/model/response_product_categories_model.dart';
 export 'package:pendu_driver/model/response_register_model.dart';
+export 'package:pendu_driver/model/response_refer_mail_model.dart';
 export 'package:pendu_driver/model/response_otp_confirm_model.dart';
 export 'package:pendu_driver/model/response_set_new_pass_model.dart';
 export 'package:pendu_driver/model/response_service_category_model.dart';

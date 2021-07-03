@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:ff_navigation_bar/ff_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:pendu_driver/api/api_manipulation.dart';
-import 'package:pendu_driver/screen/auth_screen/page_login.dart';
 import 'package:pendu_driver/screen/home_screen/page_home.dart';
 import 'package:pendu_driver/screen/screen.dart';
 import 'package:pendu_driver/utils/utils.dart';
@@ -50,7 +48,10 @@ class _MainLandingPageState extends State<MainLandingPage> {
       } else if (selectedIndex == 2) {
         _body = PenduChatSupportPage();
       } else if (selectedIndex == 3) {
-        _body = ProfileWithMenuPage();
+        _body = ProfileWithMenuPage(
+          dropper: dropper,
+          token: token,
+        );
       }
     });
   }

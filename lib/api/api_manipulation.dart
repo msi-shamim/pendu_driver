@@ -6,6 +6,7 @@ import 'package:pendu_driver/api/api_call.dart';
 import 'package:pendu_driver/api/api_const.dart';
 import 'package:pendu_driver/main_landing_page.dart';
 import 'package:pendu_driver/model/model.dart';
+import 'package:pendu_driver/model/response_droper_profile_with_level_model.dart';
 import 'package:pendu_driver/screen/auth_screen/auth_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,6 +16,12 @@ class ApiManipulation {
   var token;
   Dropper dropperVar;
   int slectedValueVar;
+
+  getDropperProfileInfoWithLevel(String dropperToken) async {
+    ResponseDrpperProfileWithLevelModel dropperProfile =
+        await CallApi(context).callDroperResponseWithLevelApi(dropperToken);
+    return dropperProfile.dropperWithLevelList;
+  }
 
   validateDroper() {
     _isLoggedIn().then((loggedIn) {

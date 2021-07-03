@@ -1,30 +1,55 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pendu_driver/api/api_call.dart';
+import 'package:pendu_driver/model/model.dart';
 import 'package:pendu_driver/utils/utils.dart';
 
 class InviteFriend extends StatefulWidget {
+  final String token;
+  final Dropper dropper;
+  InviteFriend({@required this.token, @required this.dropper});
   @override
-  _InviteFriendState createState() => _InviteFriendState();
+  _InviteFriendState createState() => _InviteFriendState(token, dropper);
 }
 
 class _InviteFriendState extends State<InviteFriend> {
+  final String token;
+  final Dropper dropper;
+  _InviteFriendState(this.token, this.dropper);
+  final emailController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  @override
+  void dispose() {
+    emailController.dispose();
+    super.dispose();
+  }
+
   Widget _buildTextField() {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10.0),
-      padding: EdgeInsets.symmetric(horizontal: 5.0),
-      height: 45,
-      decoration: BoxDecoration(
-          border: Border.all(color: Pendu.color('90A0B2')),
-          borderRadius: BorderRadius.circular(5.0)),
-      child: TextFormField(
-          decoration: InputDecoration(
-        focusedBorder: InputBorder.none,
-        enabledBorder: InputBorder.none,
-        errorBorder: InputBorder.none,
-        disabledBorder: InputBorder.none,
-        hintText: 'Enter mail address',
-        //border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-      )),
+      child: Form(
+        key: _formKey,
+        child: TextFormField(
+            validator: (eMail) {
+              if (eMail == null || eMail.isEmpty) {
+                return 'Email is required';
+              } else if (!EmailValidator.validate(eMail)) {
+                return 'Invalid Email';
+              }
+              return null;
+            },
+            controller: emailController,
+            decoration: InputDecoration(
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+              isDense: true,
+              hintText: 'Enter mail address',
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+            )),
+      ),
     );
   }
 
@@ -33,7 +58,11 @@ class _InviteFriendState extends State<InviteFriend> {
       width: MediaQuery.of(context).size.width / 2,
       height: 45,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          if (_formKey.currentState.validate()) {
+            _referMail();
+          }
+        },
         style: ElevatedButton.styleFrom(
           elevation: 0,
           primary: Theme.of(context).accentColor,
@@ -41,9 +70,6 @@ class _InviteFriendState extends State<InviteFriend> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
-          // side: BorderSide(
-          //   color: Pendu.color('90A0B2'),
-          // ),
         ),
         child: Text(
           'Send invite',
@@ -58,7 +84,12 @@ class _InviteFriendState extends State<InviteFriend> {
       width: MediaQuery.of(context).size.width / 2,
       height: 45,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          //dropper refer link
+          Clipboard.setData(ClipboardData(text: dropper.referralLink));
+          SnackBarUtils.snackBarMethod(
+              message: "Link Copied to Clipboard", context: context);
+        },
         style: ElevatedButton.styleFrom(
           elevation: 0,
           primary: Theme.of(context).primaryColor,
@@ -66,9 +97,6 @@ class _InviteFriendState extends State<InviteFriend> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
-          // side: BorderSide(
-          //   color: Pendu.color('90A0B2'),
-          // ),
         ),
         child: Text(
           'Copy link',
@@ -127,8 +155,9 @@ class _InviteFriendState extends State<InviteFriend> {
               borderRadius: BorderRadius.circular(5.0),
               color: Pendu.color('F1F1F1')),
           alignment: Alignment.center,
+          //Refer link will be here
           child: Text(
-            "https:// www.pendshf.sdajfsd/dsfds",
+            dropper.referralLink,
             style: TextStyle(color: Colors.black54),
           ),
         ),
@@ -138,5 +167,22 @@ class _InviteFriendState extends State<InviteFriend> {
         _buildShareRow()
       ],
     );
+  }
+
+  void _referMail() async {
+    ResponseSendReferMaillModel rsrmm =
+        await CallApi(context).callReferbyMailApi(token, emailController.text);
+
+    rsrmm.status == 200
+        ? _showSuccessMessage(rsrmm.message)
+        : _showErrorMessage(rsrmm.message);
+  }
+
+  _showSuccessMessage(String msg) {
+    SnackBarUtils.snackBarMethod(message: msg, context: context);
+  }
+
+  _showErrorMessage(String msg) {
+    SnackBarUtils.snackBarMethod(message: msg, context: context);
   }
 }

@@ -25,7 +25,6 @@ class _HomePageState extends State<HomePage> {
       "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.";
 
   @override
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       //bottomNavigationBar: BottomNavigation(initValue: "Home"),
@@ -62,7 +61,10 @@ class _HomePageState extends State<HomePage> {
                 //Todo Invite friend section
                 Container(
                     height: MediaQuery.of(context).size.height / 1.7,
-                    child: InviteFriend())
+                    child: InviteFriend(
+                      dropper: dropper,
+                      token: token,
+                    )),
               ],
             ),
           ),
