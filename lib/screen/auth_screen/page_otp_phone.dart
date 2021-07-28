@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:pendu_driver/main_landing_page.dart';
-import 'package:pendu_driver/screen/auth_screen/auth_screen.dart';
-import 'package:pendu_driver/screen/home_screen/page_home.dart';
 import 'package:pendu_driver/utils/utils.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -156,8 +154,9 @@ class _OtpPhoneVerifyPageState extends State<OtpPhoneVerifyPage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    MainLandingPage(seclectValue: 0)));
+                                builder: (context) => MainLandingPage(
+                                      seclectValue: 0,
+                                    )));
                       },
                     );
                   }

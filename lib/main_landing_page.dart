@@ -13,10 +13,7 @@ class MainLandingPage extends StatefulWidget {
   final Dropper dropper;
   final String token;
   MainLandingPage(
-      {Key key,
-      @required this.seclectValue,
-      @required this.dropper,
-      @required this.token})
+      {Key key, @required this.seclectValue, this.dropper, this.token})
       : super(key: key);
 
   @override
